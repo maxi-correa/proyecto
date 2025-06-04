@@ -57,7 +57,7 @@ class SetupController extends Controller
     {
         if (session()->getFlashdata('setup_estatus') !== 'exito') {
             // Si no hay mensaje de éxito, redirigir a inicio
-            return redirect()->to('/');
+            return redirect()->to('/login')->with('exito', 'La base de datos ya está configurada.');
         }
         //Mostrar en vista el mensaje de éxito
         return view('setupExito', ['mensaje' => 'Base de datos creada, migraciones y seeders ejecutados correctamente.']);
@@ -67,7 +67,7 @@ class SetupController extends Controller
     {
         if (session()->getFlashdata('setup_estatus') !== 'error') {
             // Si no hay mensaje de error, redirigir a inicio
-            return redirect()->to('/');
+            return redirect()->to('/login')->with('error', 'No se pudo completar la configuración de la base de datos.');
         }
         //Mostrar en vista el mensaje de error
         $mensaje = session()->getFlashdata('error');

@@ -23,15 +23,20 @@
             <?= session()->getFlashdata('exito') ?>
         </div>
     <?php endif; ?>
-    
+    <?php if (isset($mensaje)): ?>
+        <div class="mensaje-exito">
+            <?= esc($mensaje) ?>
+        </div>
+    <?php endif; ?>
+
     <form action='<?= base_url('login/procesar') ?>' method='post'>
         <label for="email">Correo Electrónico:</label>
-        <input type='email' name='email' id='email' required>
+        <input type='email' name='email' id='email'>
         
         <div class="password-container">
             <label for="password">Contraseña:</label>
             <i class="fa-solid fa-eye-slash toggle-password" onclick="togglePassword()"></i>
-            <input type='password' name='password' id='password' maxlength="6" placeholder="Ingrese 6 caracteres numéricos" required>
+            <input type='password' name='password' id='password' maxlength="6" placeholder="Ingrese 6 caracteres numéricos">
         </div>
 
         <button type='submit'>Iniciar Sesión</button>
