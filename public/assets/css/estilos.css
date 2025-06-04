@@ -1,0 +1,278 @@
+/*ESTILOS GENERALES*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0; /* elimina márgenes por defecto */
+    padding: 0; /* elimina padding por defecto */ /*padding es el espacio interno */
+    background-color: #fdfdfd;
+    color: #222;
+    text-align: center;
+}
+
+.body-formulario {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    height: 100vh; /* ocupa toda la altura de la ventana */
+
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;     /* Centra verticalmente */
+}
+
+h1 {
+    font-size: 2rem;
+    margin-top: 2rem;
+}
+
+.h1-exito {
+    color: #2e7d32; /* verde fuerte */
+}
+
+.h1-error {
+    color: #b30000; /* rojo fuerte */
+}
+
+/* ESTILOS PARA FORMULARIOS */
+/* Contenedor del formulario */
+.formulario {
+    background-color: #fff;
+    padding: 30px 40px; /* espacio interno */
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Título */
+.formulario h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+/* Etiquetas e inputs */
+form label {
+    display: block; /* bloque para ocupar todo el ancho */
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+form input[type="email"],
+form input[type="password"],
+form input[type="text"] {
+    width: 100%; /* ocupa todo el ancho del contenedor */
+    padding: 10px; /* espacio interno */
+    margin-bottom: 15px; /* espacio entre inputs */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+/* Botón */
+form button {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+form .boton-volver {
+    background-color: #dc3545;
+    width: 100%;
+}
+
+/* Hover del botón "Volver" */
+form .boton-volver:hover {
+    background-color: #a71d2a;
+}
+
+
+/* ESTILOS PARA IMÁGENES*/
+.imagen-central {
+    display: block;             /* permite usar margin auto */
+    margin: 1rem auto;          /* centra horizontalmente y deja espacio arriba/abajo */
+    max-width: 90%;             /* se adapta al ancho de la pantalla */
+    height: auto;               /* mantiene proporciones */
+    background-color: transparent;/* fondo blanco para tapar transparencia */
+    padding: 0.5rem;
+    border-radius: 10px;         /* bordes suaves */
+    
+}
+
+/* ESTILOS PARA TABLAS */
+.tabla-error {
+    width: 80%;
+    max-width: 900px; 
+    margin: 2rem auto; /* centrado horizontal */
+    border-collapse: collapse;
+    background-color: #fff5f5; /* fondo rojizo claro */
+    border: 2px solid #c62828;
+    border-radius: 12px;
+    overflow: hidden; /* para bordes redondeados */
+    box-shadow: 0 8px 20px rgba(198, 40, 40, 0.2); /* sombra suave */
+}
+
+.tabla-error td {
+    border: 1px solid #e57373;
+    padding: 1.5rem; /* espacio interno */
+    vertical-align: middle;
+    /*font-family: 'Rubik', sans-serif; */
+}
+
+.tabla-error tr:last-child td {
+    text-align: center;
+    padding-top: 1rem;
+}
+
+.tabla-exito {
+    width: 80%;
+    max-width: 900px;
+    margin: 2rem auto;
+    border-collapse: collapse;
+    background-color: #f1fdf6; /* fondo verdoso claro */
+    border: 2px solid #2e7d32;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(46, 125, 50, 0.2); /* sombra verde */
+}
+
+.tabla-exito td {
+    border: 1px solid #81c784;
+    padding: 1.5rem;
+    vertical-align: middle;
+    font-family: 'Rubik', sans-serif;
+}
+
+.tabla-exito tr:last-child td {
+    text-align: center;
+    padding-top: 1rem;
+}
+
+/* ESTILOS PARA BOTONES */
+
+.boton-reintentar {
+    display: inline-block;
+    background-color: #c62828;         /* Rojo intenso */
+    color: #ffffff;                    /* Texto blanco */
+    padding: 0.6rem 1.2rem;            /* Tamaño cómodo de botón */
+    font-size: 1rem;
+    font-weight: bold;
+    text-decoration: none;             /* Si es <a>, quitar subrayado */
+    border: none;
+    border-radius: 6px;                /* Bordes redondeados */
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2); /* Sombra “baja” para dar relieve */
+    cursor: pointer;
+    transition: 
+    background-color 0.2s ease,
+    transform 0.1s ease,
+    box-shadow 0.1s ease; 
+}
+
+/* Al pasar el mouse, aclaramos un poco el rojo */
+.boton-reintentar:hover {
+    background-color: #d32f2f;
+}
+
+/* Al hacer clic: sensación de “empujar” el botón */
+.boton-reintentar:active {
+    transform: translateY(4px);              /* Baja 4px */
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);    /* Sombra desaparece para parecer apretado */
+}
+
+/* ESTILOS PARA EL CAMPO DE CONTRASEÑA CON ÍCONO DE VISIBILIDAD */
+
+.password-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px; /* Ajustá según tu diseño */
+    margin: 0 auto;
+}
+
+.password-container input {
+    width: 100%;
+    padding: 10px 40px 10px 10px; /* Espacio a la derecha para el ícono */
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.password-container .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-10%);
+    cursor: pointer;
+    color: #888;
+    font-size: 18px;
+}
+
+/* ESTILOS PARA MENSAJES DE ERROR Y ÉXITO */
+
+.mensaje-exito {
+    color: #0f730c;                      /* verde fuerte para el texto */
+    background-color: rgba(0, 255, 0, 0.1); /* verde claro con transparencia */
+    border: 1px solid #0f730c;           /* borde verde */
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.mensaje-error {
+    color: #b30000;                /* rojo fuerte para el texto */
+    background-color: rgba(255, 0, 0, 0.1); /* rojo claro con transparencia */
+    border: 1px solid #b30000;     /* borde rojo */
+    padding: 1rem;                 /* espacio interno */
+    margin: 1rem 0;                /* margen superior e inferior */
+    border-radius: 5px;            /* bordes levemente redondeados */
+    font-weight: bold;             /* letra en negrita */
+}
+
+#cuenta { 
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #2e7d32; /* verde inicial */
+    transition: color 0.5s ease, transform 0.3s ease;
+    display: inline-block;
+}
+
+#cuenta.alerta {
+    color: #c62828; /* rojo al final */
+    transform: scale(1.4);
+}
+
+/* ESTILOS PARA EL MENÚ DE NAVEGACIÓN */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #222;
+    color: white;
+    padding: 10px 20px;
+}
+
+.usuario-info {
+    font-weight: bold;
+}
+
+.audio-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+audio {
+    display: none; /* Oculta el reproductor nativo */
+}
