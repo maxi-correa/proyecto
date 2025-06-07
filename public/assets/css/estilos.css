@@ -1,13 +1,14 @@
 /*ESTILOS GENERALES*/
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;600;700&display=swap');
 
-body {
+html, body {
     font-family: 'Poppins', sans-serif;
     margin: 0; /* elimina márgenes por defecto */
     padding: 0; /* elimina padding por defecto */ /*padding es el espacio interno */
-    background-color: #fdfdfd;
+    background-color: #f2f2f2;
     color: #222;
     text-align: center;
+    height: 100%; /* ocupa toda la altura de la ventana */
 }
 
 .body-formulario {
@@ -17,8 +18,19 @@ body {
     height: 100vh; /* ocupa toda la altura de la ventana */
 
     display: flex;
+    flex-direction: column; /* apila los elementos verticalmente */
+    min-height: 100vh; /* asegura que ocupe al menos toda la altura de la ventana */
     justify-content: center; /* Centra horizontalmente */
     align-items: center;     /* Centra verticalmente */
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f2f2f2; /* o el fondo que prefieras */
+    padding: 20px;
 }
 
 h1 {
@@ -32,6 +44,19 @@ h1 {
 
 .h1-error {
     color: #b30000; /* rojo fuerte */
+}
+
+/*ESTILO PARA PIE DE PÁGINA */
+.footer {
+    position: relative; /* para que se posicione al final del contenido */
+    bottom: 0; /* al fondo */
+    width: 100%;
+    background-color: #f8f8f8;
+    color: #333;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    border-top: 1px solid #ccc;
 }
 
 /* ESTILOS PARA FORMULARIOS */
@@ -112,6 +137,19 @@ form .boton-volver:hover {
     
 }
 
+.imagen-logout img {
+    height: 32px; /* o la altura que tenga tu navbar */
+    width: auto;
+    object-fit: contain;
+    vertical-align: middle;
+    transition: opacity 0.2s ease;
+}
+
+.imagen-logout img:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
 /* ESTILOS PARA TABLAS */
 .tabla-error {
     width: 80%;
@@ -190,6 +228,23 @@ form .boton-volver:hover {
 .boton-reintentar:active {
     transform: translateY(4px);              /* Baja 4px */
     box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);    /* Sombra desaparece para parecer apretado */
+}
+/* Boton para crear base de datos */
+.button-bd {
+    width: 100%;
+    background-color: #009129;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-bd:hover {
+    background-color: #007a33;
 }
 
 /* ESTILOS PARA EL CAMPO DE CONTRASEÑA CON ÍCONO DE VISIBILIDAD */

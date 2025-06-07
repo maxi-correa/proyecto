@@ -150,3 +150,51 @@ in APPPATH\Views\registro.php on line 18.
  9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
 10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
 11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-04 22:42:10 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "pie.php"
+[Method: GET, Route: /]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('pie.php')
+ 2 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('pie', [], true)
+ 3 APPPATH\Views\main.php(33): view('pie')
+ 4 SYSTEMPATH\View\View.php(224): include('C:\\wamp64\\www\\proyecto\\app\\Views\\main.php')
+ 5 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('main', [], true)
+ 7 APPPATH\Controllers\MainController.php(14): view('main', [...])
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MainController->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MainController))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-04 22:42:21 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "pie.php"
+[Method: GET, Route: /]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('pie.php')
+ 2 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('pie', [], true)
+ 3 APPPATH\Views\main.php(33): view('pie')
+ 4 SYSTEMPATH\View\View.php(224): include('C:\\wamp64\\www\\proyecto\\app\\Views\\main.php')
+ 5 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('main', [], true)
+ 7 APPPATH\Controllers\MainController.php(14): view('main', [...])
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MainController->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MainController))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-04 22:42:48 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "pie.php"
+[Method: GET, Route: /]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('pie.php')
+ 2 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('pie', [], true)
+ 3 APPPATH\Views\main.php(33): view('pie')
+ 4 SYSTEMPATH\View\View.php(224): include('C:\\wamp64\\www\\proyecto\\app\\Views\\main.php')
+ 5 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('main', [], true)
+ 7 APPPATH\Controllers\MainController.php(14): view('main', [...])
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MainController->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MainController))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/css/estilos.css') ?>">
 </head>
-<body class="body-formulario">
-
-<div class="formulario">
+<body>
+<div class="body-formulario">
+    <main class="main-content">
+    <div class="formulario">
     <h1>Registro de Usuario</h1>
 
     <?php if (session()->getFlashdata('error')): ?>
@@ -52,6 +53,9 @@
         <br><br>
         <button type="button"  class="boton-volver" onclick="window.location.href='<?= base_url('login') ?>'">Volver</button>
     </form>
+    </div>
+    </main>
+<?= view('capas/pie') ?>
 </div>
 
 <script>

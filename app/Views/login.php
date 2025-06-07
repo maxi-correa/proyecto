@@ -9,18 +9,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel='stylesheet' href='<?= base_url('assets/css/estilos.css') ?>'>
 </head>
-<body class="body-formulario">
-
-<div class="formulario">
-    <h1>Iniciar Sesión</h1>
-    <?php if (session()->getFlashdata('error')): ?>
-        <div class="mensaje-error">
-            <?= session()->getFlashdata('error') ?>
-        </div>
-    <?php endif; ?>
-    <?php if (session()->getFlashdata('exito')): ?>
-        <div class="mensaje-exito">
-            <?= session()->getFlashdata('exito') ?>
+<body>
+<div class="body-formulario">
+    <main class="main-content">
+    <div class="formulario">
+        <h1>Iniciar Sesión</h1>
+        <?php if (session()->getFlashdata('error')): ?>
+            <div class="mensaje-error">
+                <?= session()->getFlashdata('error') ?>
+            </div>
+        <?php endif; ?>
+        <?php if (session()->getFlashdata('exito')): ?>
+            <div class="mensaje-exito">
+                <?= session()->getFlashdata('exito') ?>
         </div>
     <?php endif; ?>
     <?php if (isset($mensaje)): ?>
@@ -42,8 +43,12 @@
         <button type='submit'>Iniciar Sesión</button>
     </form>
     <p>¿No tienes una cuenta? <a href="<?= base_url('registro') ?>">Regístrate aquí</a></p>
-</div>
+    <button type="button" class="button-bd" onclick="window.location.href='<?= base_url('setup') ?>'">Crear Base de Datos</button>
+    </div>
+    </main>
 
+    <?= view('capas/pie') ?>
+</div>
 <script>
 function togglePassword() {
     const input = document.getElementById("password");

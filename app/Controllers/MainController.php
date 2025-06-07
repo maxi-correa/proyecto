@@ -25,7 +25,7 @@ class MainController extends BaseController
     {
         // Cerrar sesión
         session()->destroy();
-        return view('login', ['mensaje' => 'Sesión cerrada correctamente.']);
+        return redirect()->to('/login')->with('exito', 'Has cerrado sesión exitosamente.');
     }
 }
 ?>
