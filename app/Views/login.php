@@ -43,7 +43,7 @@
         <button type='submit'>Iniciar Sesión</button>
     </form>
     <p>¿No tienes una cuenta? <a href="<?= base_url('registro') ?>">Regístrate aquí</a></p>
-    <button type="button" class="button-bd" onclick="window.location.href='<?= base_url('setup') ?>'">Crear Base de Datos</button>
+    <button type="button" <?= $existe_bd ? 'disabled' : '' ?>  class="boton-bd <?= $existe_bd ? 'disabled' : '' ?>" onclick="window.location.href='<?= base_url('setup') ?>'">Crear Base de Datos</button>
     </div>
     </main>
 

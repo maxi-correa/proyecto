@@ -5,8 +5,16 @@ class AuthController extends BaseController
 {
     public function login()
     {
+        // Verificar si el usuario ya está autenticado
+        if (session()->get('logueado')) {
+            // Redirigir a la página principal si ya está autenticado
+            return redirect()->to('/');
+        }
+        
+        $existe_bd = $this->comprobar_bd();
+        
         // Cargar la vista de inicio de sesión
-        return view('login');
+        return view('login', ['existe_bd' => $existe_bd]);
     }
 
     public function procesarLogin()
@@ -106,6 +114,25 @@ class AuthController extends BaseController
             return redirect()->to('/login')->with('exito', 'Usuario registrado con éxito.');
         } else {
             return redirect()->to('/registro')->withInput()->with('error', 'No se pudo registrar el usuario.');
+        }
+    }
+
+    public function comprobar_bd()
+    {
+        $db = db_connect();
+        
+        try{
+            // Verificar si la base de datos 'juego' existe
+            $consulta = $db->query("SHOW DATABASES LIKE 'juego'");
+
+        } catch (\Exception $e) {
+            return false; // Si hay un error al conectarse, la base de datos no existe
+        }
+        
+        if ($consulta->getNumRows() > 0) {
+            return true; // La base de datos existe
+        } else {
+            return false; // La base de datos no existe
         }
     }
 }

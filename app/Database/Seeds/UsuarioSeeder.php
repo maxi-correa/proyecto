@@ -13,6 +13,7 @@ class UsuarioSeeder extends Seeder
             'apellido' => 'Demo',
             'email' => 'demo@email.com',
             'password' => password_hash('123456', PASSWORD_DEFAULT),
+            'creado_en' => date('Y-m-d H:i:s'),
         ];
 
         $this->db->table('usuarios')->insert($data);

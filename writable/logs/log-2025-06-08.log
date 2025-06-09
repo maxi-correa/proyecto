@@ -1,0 +1,48 @@
+ERROR - 2025-06-08 22:48:59 --> mysqli_sql_exception: Duplicate entry 'demo@email.com' for key 'usuarios.email' in C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `us...', 0)
+#1 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `us...')
+#2 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `us...')
+#3 C:\wamp64\www\proyecto\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `us...', Array, false)
+#4 C:\wamp64\www\proyecto\app\Database\Seeds\UsuarioSeeder.php(18): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 C:\wamp64\www\proyecto\system\Database\Seeder.php(149): App\Database\Seeds\UsuarioSeeder->run()
+#6 C:\wamp64\www\proyecto\app\Controllers\SetupController.php(39): CodeIgniter\Database\Seeder->call('App\\Database\\Se...')
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\SetupController->index()
+#8 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetupController))
+#9 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+ERROR - 2025-06-08 22:49:05 --> mysqli_sql_exception: Duplicate entry 'demo@email.com' for key 'usuarios.email' in C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `us...', 0)
+#1 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `us...')
+#2 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `us...')
+#3 C:\wamp64\www\proyecto\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `us...', Array, false)
+#4 C:\wamp64\www\proyecto\app\Database\Seeds\UsuarioSeeder.php(18): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 C:\wamp64\www\proyecto\system\Database\Seeder.php(149): App\Database\Seeds\UsuarioSeeder->run()
+#6 C:\wamp64\www\proyecto\app\Controllers\SetupController.php(39): CodeIgniter\Database\Seeder->call('App\\Database\\Se...')
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\SetupController->index()
+#8 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetupController))
+#9 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+ERROR - 2025-06-08 22:49:12 --> mysqli_sql_exception: Duplicate entry 'demo@email.com' for key 'usuarios.email' in C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `us...', 0)
+#1 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `us...')
+#2 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `us...')
+#3 C:\wamp64\www\proyecto\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `us...', Array, false)
+#4 C:\wamp64\www\proyecto\app\Database\Seeds\UsuarioSeeder.php(18): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 C:\wamp64\www\proyecto\system\Database\Seeder.php(149): App\Database\Seeds\UsuarioSeeder->run()
+#6 C:\wamp64\www\proyecto\app\Controllers\SetupController.php(39): CodeIgniter\Database\Seeder->call('App\\Database\\Se...')
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\SetupController->index()
+#8 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetupController))
+#9 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}

@@ -1,0 +1,214 @@
+ERROR - 2025-06-09 00:25:10 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'juego' in C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'juego', 3306, '', 0)
+#1 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(125): CodeIgniter\Database\BaseConnection->query('SHOW DATABASES ...')
+#4 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(14): App\Controllers\AuthController->comprobar_bd()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->login()
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'juego' in C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(125): CodeIgniter\Database\BaseConnection->query('SHOW DATABASES ...')
+#3 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(14): App\Controllers\AuthController->comprobar_bd()
+#4 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->login()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#8 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#9 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#10 {main}
+CRITICAL - 2025-06-09 00:25:10 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'juego'
+[Method: GET, Route: login]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->initialize()
+ 2 APPPATH\Controllers\AuthController.php(125): CodeIgniter\Database\BaseConnection->query('SHOW DATABASES LIKE \'juego\'')
+ 3 APPPATH\Controllers\AuthController.php(14): App\Controllers\AuthController->comprobar_bd()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\AuthController->login()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-06-09 00:25:25 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'juego' in C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'juego', 3306, '', 0)
+#1 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(125): CodeIgniter\Database\BaseConnection->query('SHOW DATABASES ...')
+#4 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(14): App\Controllers\AuthController->comprobar_bd()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->login()
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'juego' in C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(125): CodeIgniter\Database\BaseConnection->query('SHOW DATABASES ...')
+#3 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(14): App\Controllers\AuthController->comprobar_bd()
+#4 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->login()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#8 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#9 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#10 {main}
+CRITICAL - 2025-06-09 00:25:25 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'juego'
+[Method: GET, Route: login]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->initialize()
+ 2 APPPATH\Controllers\AuthController.php(125): CodeIgniter\Database\BaseConnection->query('SHOW DATABASES LIKE \'juego\'')
+ 3 APPPATH\Controllers\AuthController.php(14): App\Controllers\AuthController->comprobar_bd()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\AuthController->login()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-06-09 00:26:15 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'juego' in C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'juego', 3306, '', 0)
+#1 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(125): CodeIgniter\Database\BaseConnection->query('SHOW DATABASES ...')
+#4 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(14): App\Controllers\AuthController->comprobar_bd()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->login()
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'juego' in C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(125): CodeIgniter\Database\BaseConnection->query('SHOW DATABASES ...')
+#3 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(14): App\Controllers\AuthController->comprobar_bd()
+#4 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->login()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#8 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#9 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#10 {main}
+CRITICAL - 2025-06-09 00:26:15 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'juego'
+[Method: GET, Route: login]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->initialize()
+ 2 APPPATH\Controllers\AuthController.php(125): CodeIgniter\Database\BaseConnection->query('SHOW DATABASES LIKE \'juego\'')
+ 3 APPPATH\Controllers\AuthController.php(14): App\Controllers\AuthController->comprobar_bd()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\AuthController->login()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-09 00:35:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-06-09 00:35:56 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'juego' in C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'juego', 3306, '', 0)
+#1 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(125): CodeIgniter\Database\BaseConnection->query('SHOW DATABASES ...')
+#4 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(14): App\Controllers\AuthController->comprobar_bd()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->login()
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'juego' in C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(125): CodeIgniter\Database\BaseConnection->query('SHOW DATABASES ...')
+#3 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(14): App\Controllers\AuthController->comprobar_bd()
+#4 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->login()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#8 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#9 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#10 {main}
+CRITICAL - 2025-06-09 00:35:56 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'juego'
+[Method: GET, Route: login]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->initialize()
+ 2 APPPATH\Controllers\AuthController.php(125): CodeIgniter\Database\BaseConnection->query('SHOW DATABASES LIKE \'juego\'')
+ 3 APPPATH\Controllers\AuthController.php(14): App\Controllers\AuthController->comprobar_bd()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\AuthController->login()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-09 00:46:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-06-09 00:46:18 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'juego' in C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'juego', 3306, '', 0)
+#1 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(126): CodeIgniter\Database\BaseConnection->query('SHOW DATABASES ...')
+#4 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(14): App\Controllers\AuthController->comprobar_bd()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->login()
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'juego' in C:\wamp64\www\proyecto\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\wamp64\www\proyecto\system\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(126): CodeIgniter\Database\BaseConnection->query('SHOW DATABASES ...')
+#3 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(14): App\Controllers\AuthController->comprobar_bd()
+#4 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->login()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#8 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#9 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#10 {main}
+DEBUG - 2025-06-09 00:46:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:46:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:46:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:46:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:47:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:47:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:48:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:48:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:48:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:48:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:48:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:48:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:48:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:48:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:49:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:49:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:49:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:49:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:49:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-09 00:50:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

@@ -20,7 +20,7 @@
             <input type="range" id="volumen" min="0" max="1" step="0.01" value="0.2">
         </div>
         <a href="<?= base_url('/logout') ?>" class="imagen-logout">
-            <img src="<?= base_url('assets/img/cerrar_sesion_color.png') ?>" alt="Cerrar sesión" title="Cerrar sesión">
+            <img src="<?= base_url('assets/img/cerrar_sesion.png') ?>" alt="Cerrar sesión" title="Cerrar sesión">
         </a>
     </header>
 

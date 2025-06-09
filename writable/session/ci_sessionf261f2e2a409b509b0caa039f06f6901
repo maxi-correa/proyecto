@@ -1,0 +1,1 @@
+__ci_last_regenerate|i:1749332945;_ci_previous_url|s:54:"http://localhost/proyecto/public/index.php/setup/error";error|s:57:"Duplicate entry 'demo@email.com' for key 'usuarios.email'";setup_estatus|s:5:"error";__ci_vars|a:2:{s:5:"error";s:3:"old";s:13:"setup_estatus";s:3:"old";}

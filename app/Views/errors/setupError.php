@@ -27,7 +27,7 @@
     </tr>
     <tr>
         <td>
-            <a href="<?= base_url('setup') ?>" class="boton-reintentar">Volver a intentar</a>
+            <button onclick="location.href='<?= base_url('login') ?>'" class="boton-volver">Volver</button>
         </td>
     </tr>
     </table>
