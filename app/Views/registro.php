@@ -26,7 +26,7 @@
         </div>
     <?php endif; ?>
 
-    <form action="<?= base_url('registro/procesarRegistro') ?>" method="post">
+    <form action="<?= base_url('registro/procesar') ?>" method="post">
 
         <label for="nombre">Nombre*:</label>
         <input type="text" name="nombre" id="nombre" value="<?= old('nombre') ?>">

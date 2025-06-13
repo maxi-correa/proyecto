@@ -63,7 +63,7 @@ class AuthController extends BaseController
         return view('registro');
     }
 
-    public function registrar()
+    public function procesarRegistro()
     {
         $request = \Config\Services::request(); // Obtener el servicio de solicitud
         
@@ -122,18 +122,63 @@ class AuthController extends BaseController
         $db = db_connect();
         
         try{
-            // Verificar si la base de datos 'juego' existe
-            $consulta = $db->query("SHOW DATABASES LIKE 'juego'");
+            // Verificar si la base de datos existe
+            $dbName = env('database.default.database'); // Nombre de la base de datos
+            $consulta = $db->query("SHOW DATABASES LIKE '$dbName'");
 
         } catch (\Exception $e) {
             return false; // Si hay un error al conectarse, la base de datos no existe
         }
-        
+
         if ($consulta->getNumRows() > 0) {
             return true; // La base de datos existe
         } else {
             return false; // La base de datos no existe
         }
     }
+
+    public function recuperarContrasena()
+    {
+        // Cargar la vista de recuperar contraseña
+        return view('recuperarContrasena');
+    }
+
+    public function procesarRecuperarContrasena()
+    {
+        // Procesar el formulario de recuperación de contraseña
+        $email = $this->request->getPost('email');
+        if (empty($email)) {
+            return redirect()->to('/recuperar')->with('error', 'El correo electrónico es obligatorio.');
+        }
+        // Validar que el email tenga un formato correcto
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return redirect()->to('/recuperar')->with('error', 'El correo electrónico no es válido.');
+        }
+        
+        $usuarioModel = new \App\Models\UsuarioModel();
+        $usuario = $usuarioModel->where('email', $email)->first();
+        
+        if (!$usuario) {
+            return redirect()->to('/recuperar')->with('error', 'El usuario no existe.');
+        }
+
+        if($usuario)
+        {
+            $nuevaContrasena = random_int(100000, 999999); // Generar una nueva contraseña aleatoria de 6 dígitos
+            $usuarioModel->update($usuario['id'], ['password' => password_hash($nuevaContrasena, PASSWORD_DEFAULT)]);
+
+            // Enviar un correo electrónico con la nueva contraseña al usuario
+            $servicioEmail = \Config\Services::email();
+            $servicioEmail->setTo($email);
+            $servicioEmail->setSubject('Nueva contraseña');
+            $servicioEmail->setMessage("Su nueva contraseña es: $nuevaContrasena");
+            if ($servicioEmail->send()) {
+                return redirect()->to('/login')->with('exito', 'Se ha enviado un correo electrónico con la nueva contraseña.');
+            } else {
+                return redirect()->to('/recuperar')->with('error', 'No se pudo enviar el correo electrónico.');
+            }
+        }
+    }
 }
+
 ?>

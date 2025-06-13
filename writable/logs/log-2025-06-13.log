@@ -1,0 +1,294 @@
+DEBUG - 2025-06-13 00:31:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:00:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:01:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:01:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:01:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:02:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:03:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:03:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:03:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:03:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:04:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:04:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:04:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:21:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:21:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:21:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:21:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:21:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:21:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:21:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:31:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:31:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:31:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:31:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:31:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:31:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:31:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:31:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:31:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:32:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:32:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:32:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:32:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:32:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:32:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:32:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:32:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:32:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:32:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:32:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-13 01:32:58 --> ErrorException: Attempt to read property "id" on array
+[Method: POST, Route: recuperar/procesar]
+in APPPATH\Controllers\AuthController.php on line 167.
+ 1 APPPATH\Controllers\AuthController.php(167): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "id" on array', 'C:\\wamp64\\www\\proyecto\\app\\Controllers\\AuthController.php', 167)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\AuthController->procesarRecuperarContrasena()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-13 01:45:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-06-13 01:45:32 --> Email: sendWithMail throwed ErrorException: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() in C:\wamp64\www\proyecto\system\Email\Email.php:1766
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'mail(): Failed ...', 'C:\\wamp64\\www\\p...', 1766)
+#1 C:\wamp64\www\proyecto\system\Email\Email.php(1766): mail('maxis.c.22@gmai...', '=?UTF-8?Q?Nueva...', 'This is a multi...', 'Date: Fri, 13 J...', '-f maxis.c.22@g...')
+#2 C:\wamp64\www\proyecto\system\Email\Email.php(1698): CodeIgniter\Email\Email->sendWithMail()
+#3 C:\wamp64\www\proyecto\system\Email\Email.php(1592): CodeIgniter\Email\Email->spoolEmail()
+#4 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(175): CodeIgniter\Email\Email->send()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->procesarRecuperarContrasena()
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-06-13 01:45:32 --> Email: Unable to send email using PHP mail(). Your server might not be configured to send mail using this method.
+ERROR - 2025-06-13 01:45:32 --> 
+DEBUG - 2025-06-13 01:45:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:45:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-06-13 01:49:48 --> Email: sendWithMail throwed ErrorException: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() in C:\wamp64\www\proyecto\system\Email\Email.php:1766
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'mail(): Failed ...', 'C:\\wamp64\\www\\p...', 1766)
+#1 C:\wamp64\www\proyecto\system\Email\Email.php(1766): mail('maxis.c.22@gmai...', '=?UTF-8?Q?Nueva...', 'This is a multi...', 'Date: Fri, 13 J...', '-f maxis.c.22@g...')
+#2 C:\wamp64\www\proyecto\system\Email\Email.php(1698): CodeIgniter\Email\Email->sendWithMail()
+#3 C:\wamp64\www\proyecto\system\Email\Email.php(1592): CodeIgniter\Email\Email->spoolEmail()
+#4 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(175): CodeIgniter\Email\Email->send()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->procesarRecuperarContrasena()
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-06-13 01:49:48 --> Email: Unable to send email using PHP mail(). Your server might not be configured to send mail using this method.
+ERROR - 2025-06-13 01:49:48 --> 
+DEBUG - 2025-06-13 01:49:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:49:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-06-13 01:58:47 --> Email: sendWithMail throwed ErrorException: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() in C:\wamp64\www\proyecto\system\Email\Email.php:1766
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'mail(): Failed ...', 'C:\\wamp64\\www\\p...', 1766)
+#1 C:\wamp64\www\proyecto\system\Email\Email.php(1766): mail('maxis.c.22@gmai...', '=?UTF-8?Q?Nueva...', 'This is a multi...', 'Date: Fri, 13 J...', '-f maxis.c.22@g...')
+#2 C:\wamp64\www\proyecto\system\Email\Email.php(1698): CodeIgniter\Email\Email->sendWithMail()
+#3 C:\wamp64\www\proyecto\system\Email\Email.php(1592): CodeIgniter\Email\Email->spoolEmail()
+#4 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(175): CodeIgniter\Email\Email->send()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->procesarRecuperarContrasena()
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-06-13 01:58:47 --> Email: Unable to send email using PHP mail(). Your server might not be configured to send mail using this method.
+ERROR - 2025-06-13 01:58:47 --> 
+DEBUG - 2025-06-13 01:58:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:58:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-06-13 01:59:05 --> Email: sendWithMail throwed ErrorException: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() in C:\wamp64\www\proyecto\system\Email\Email.php:1766
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'mail(): Failed ...', 'C:\\wamp64\\www\\p...', 1766)
+#1 C:\wamp64\www\proyecto\system\Email\Email.php(1766): mail('maxis.c.22@gmai...', '=?UTF-8?Q?Nueva...', 'This is a multi...', 'Date: Fri, 13 J...', '-f maxis.c.22@g...')
+#2 C:\wamp64\www\proyecto\system\Email\Email.php(1698): CodeIgniter\Email\Email->sendWithMail()
+#3 C:\wamp64\www\proyecto\system\Email\Email.php(1592): CodeIgniter\Email\Email->spoolEmail()
+#4 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(175): CodeIgniter\Email\Email->send()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->procesarRecuperarContrasena()
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-06-13 01:59:05 --> Email: Unable to send email using PHP mail(). Your server might not be configured to send mail using this method.
+ERROR - 2025-06-13 01:59:05 --> 
+DEBUG - 2025-06-13 01:59:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:59:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-06-13 01:59:36 --> Email: sendWithMail throwed ErrorException: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() in C:\wamp64\www\proyecto\system\Email\Email.php:1766
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'mail(): Failed ...', 'C:\\wamp64\\www\\p...', 1766)
+#1 C:\wamp64\www\proyecto\system\Email\Email.php(1766): mail('maxis.c.22@gmai...', '=?UTF-8?Q?Nueva...', 'This is a multi...', 'Date: Fri, 13 J...', '-f maxis.c.22@g...')
+#2 C:\wamp64\www\proyecto\system\Email\Email.php(1698): CodeIgniter\Email\Email->sendWithMail()
+#3 C:\wamp64\www\proyecto\system\Email\Email.php(1592): CodeIgniter\Email\Email->spoolEmail()
+#4 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(175): CodeIgniter\Email\Email->send()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->procesarRecuperarContrasena()
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-06-13 01:59:36 --> Email: Unable to send email using PHP mail(). Your server might not be configured to send mail using this method.
+ERROR - 2025-06-13 01:59:36 --> 
+DEBUG - 2025-06-13 01:59:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:59:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-06-13 01:59:49 --> Email: sendWithMail throwed ErrorException: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() in C:\wamp64\www\proyecto\system\Email\Email.php:1766
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'mail(): Failed ...', 'C:\\wamp64\\www\\p...', 1766)
+#1 C:\wamp64\www\proyecto\system\Email\Email.php(1766): mail('maxis.c.22@gmai...', '=?UTF-8?Q?Nueva...', 'This is a multi...', 'Date: Fri, 13 J...', '-f maxis.c.22@g...')
+#2 C:\wamp64\www\proyecto\system\Email\Email.php(1698): CodeIgniter\Email\Email->sendWithMail()
+#3 C:\wamp64\www\proyecto\system\Email\Email.php(1592): CodeIgniter\Email\Email->spoolEmail()
+#4 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(175): CodeIgniter\Email\Email->send()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->procesarRecuperarContrasena()
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-06-13 01:59:49 --> Email: Unable to send email using PHP mail(). Your server might not be configured to send mail using this method.
+ERROR - 2025-06-13 01:59:49 --> 
+DEBUG - 2025-06-13 01:59:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 01:59:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-06-13 02:02:39 --> Email: sendWithMail throwed ErrorException: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() in C:\wamp64\www\proyecto\system\Email\Email.php:1766
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'mail(): Failed ...', 'C:\\wamp64\\www\\p...', 1766)
+#1 C:\wamp64\www\proyecto\system\Email\Email.php(1766): mail('maxis.c.22@gmai...', '=?UTF-8?Q?Nueva...', 'This is a multi...', 'Date: Fri, 13 J...', '-f maxis.c.22@g...')
+#2 C:\wamp64\www\proyecto\system\Email\Email.php(1698): CodeIgniter\Email\Email->sendWithMail()
+#3 C:\wamp64\www\proyecto\system\Email\Email.php(1592): CodeIgniter\Email\Email->spoolEmail()
+#4 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(175): CodeIgniter\Email\Email->send()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->procesarRecuperarContrasena()
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-06-13 02:02:39 --> Email: Unable to send email using PHP mail(). Your server might not be configured to send mail using this method.
+ERROR - 2025-06-13 02:02:39 --> 
+DEBUG - 2025-06-13 02:07:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:07:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-06-13 02:07:18 --> Email: sendWithMail throwed ErrorException: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() in C:\wamp64\www\proyecto\system\Email\Email.php:1766
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'mail(): Failed ...', 'C:\\wamp64\\www\\p...', 1766)
+#1 C:\wamp64\www\proyecto\system\Email\Email.php(1766): mail('maxis.c.22@gmai...', '=?UTF-8?Q?Nueva...', 'This is a multi...', 'Date: Fri, 13 J...', '-f maxis.c.22@g...')
+#2 C:\wamp64\www\proyecto\system\Email\Email.php(1698): CodeIgniter\Email\Email->sendWithMail()
+#3 C:\wamp64\www\proyecto\system\Email\Email.php(1592): CodeIgniter\Email\Email->spoolEmail()
+#4 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(175): CodeIgniter\Email\Email->send()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->procesarRecuperarContrasena()
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-06-13 02:07:18 --> Email: Unable to send email using PHP mail(). Your server might not be configured to send mail using this method.
+ERROR - 2025-06-13 02:07:18 --> 
+DEBUG - 2025-06-13 02:23:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:23:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-06-13 02:23:30 --> Email: sendWithMail throwed ErrorException: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() in C:\wamp64\www\proyecto\system\Email\Email.php:1766
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'mail(): Failed ...', 'C:\\wamp64\\www\\p...', 1766)
+#1 C:\wamp64\www\proyecto\system\Email\Email.php(1766): mail('maxis.c.22@gmai...', '=?UTF-8?Q?Nueva...', 'This is a multi...', 'Date: Fri, 13 J...', '-f maxis.c.22@g...')
+#2 C:\wamp64\www\proyecto\system\Email\Email.php(1698): CodeIgniter\Email\Email->sendWithMail()
+#3 C:\wamp64\www\proyecto\system\Email\Email.php(1592): CodeIgniter\Email\Email->spoolEmail()
+#4 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(176): CodeIgniter\Email\Email->send()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->procesarRecuperarContrasena()
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-06-13 02:23:30 --> Email: Unable to send email using PHP mail(). Your server might not be configured to send mail using this method.
+ERROR - 2025-06-13 02:23:30 --> 
+DEBUG - 2025-06-13 02:25:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-06-13 02:25:59 --> Email: sendWithMail throwed ErrorException: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() in C:\wamp64\www\proyecto\system\Email\Email.php:1766
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'mail(): Failed ...', 'C:\\wamp64\\www\\p...', 1766)
+#1 C:\wamp64\www\proyecto\system\Email\Email.php(1766): mail('maxis.c.22@gmai...', '=?UTF-8?Q?Nueva...', 'This is a multi...', 'Date: Fri, 13 J...', '-f maxis.c.22@g...')
+#2 C:\wamp64\www\proyecto\system\Email\Email.php(1698): CodeIgniter\Email\Email->sendWithMail()
+#3 C:\wamp64\www\proyecto\system\Email\Email.php(1592): CodeIgniter\Email\Email->spoolEmail()
+#4 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(176): CodeIgniter\Email\Email->send()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->procesarRecuperarContrasena()
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-06-13 02:25:59 --> Email: Unable to send email using PHP mail(). Your server might not be configured to send mail using this method.
+ERROR - 2025-06-13 02:25:59 --> 
+ERROR - 2025-06-13 02:26:55 --> Email: sendWithMail throwed ErrorException: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() in C:\wamp64\www\proyecto\system\Email\Email.php:1766
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'mail(): Failed ...', 'C:\\wamp64\\www\\p...', 1766)
+#1 C:\wamp64\www\proyecto\system\Email\Email.php(1766): mail('maxis.c.22@gmai...', '=?UTF-8?Q?Nueva...', 'This is a multi...', 'Date: Fri, 13 J...', '-f maxis.c.22@g...')
+#2 C:\wamp64\www\proyecto\system\Email\Email.php(1698): CodeIgniter\Email\Email->sendWithMail()
+#3 C:\wamp64\www\proyecto\system\Email\Email.php(1592): CodeIgniter\Email\Email->spoolEmail()
+#4 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(176): CodeIgniter\Email\Email->send()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->procesarRecuperarContrasena()
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-06-13 02:26:55 --> Email: Unable to send email using PHP mail(). Your server might not be configured to send mail using this method.
+ERROR - 2025-06-13 02:26:55 --> 
+DEBUG - 2025-06-13 02:27:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:27:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:27:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:27:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:27:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-06-13 02:27:22 --> Email: sendWithMail throwed ErrorException: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() in C:\wamp64\www\proyecto\system\Email\Email.php:1766
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'mail(): Failed ...', 'C:\\wamp64\\www\\p...', 1766)
+#1 C:\wamp64\www\proyecto\system\Email\Email.php(1766): mail('maxis.c.22@gmai...', '=?UTF-8?Q?Nueva...', 'This is a multi...', 'Date: Fri, 13 J...', '-f maxis.c.22@g...')
+#2 C:\wamp64\www\proyecto\system\Email\Email.php(1698): CodeIgniter\Email\Email->sendWithMail()
+#3 C:\wamp64\www\proyecto\system\Email\Email.php(1592): CodeIgniter\Email\Email->spoolEmail()
+#4 C:\wamp64\www\proyecto\app\Controllers\AuthController.php(176): CodeIgniter\Email\Email->send()
+#5 C:\wamp64\www\proyecto\system\CodeIgniter.php(933): App\Controllers\AuthController->procesarRecuperarContrasena()
+#6 C:\wamp64\www\proyecto\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#7 C:\wamp64\www\proyecto\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\proyecto\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\proyecto\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\proyecto\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-06-13 02:27:22 --> Email: Unable to send email using PHP mail(). Your server might not be configured to send mail using this method.
+ERROR - 2025-06-13 02:27:22 --> 
+DEBUG - 2025-06-13 02:30:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:30:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:30:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:30:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:31:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:34:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:34:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:34:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:34:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:35:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:35:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:35:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:35:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:35:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:35:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:35:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:36:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:36:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:36:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:36:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:36:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:36:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:36:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:36:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:36:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:36:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:36:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:38:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-13 02:38:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

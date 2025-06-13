@@ -11,12 +11,12 @@ class SetupController extends Controller
             
             //Crear la base de datos si no existe
             $mysqli = new \mysqli('localhost', 'root', '', '');
-            if ($mysqli->connect_errno)
+            if ($mysqli->connect_errno) // Verificar si hay errores de conexión
             {
                 echo 'Error de conexión a MySQL: ' . $mysqli->connect_error . '<br>';
             }
 
-            $dbName = 'juego'; //Nombre de la base de datos
+            $dbName = env('database.default.database'); //Nombre de la base de datos
             $consulta = "CREATE DATABASE IF NOT EXISTS $dbName CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
             if ($mysqli->query($consulta)===true)
             {
