@@ -32,7 +32,7 @@
 
     <form action='<?= base_url('login/procesar') ?>' method='post'>
         <label for="email">Correo electrónico:</label>
-        <input type='email' name='email' id='email'>
+        <input type='email' name='email' id='email' value="<?= old('email') ?>">
         
         <div class="password-container">
             <label for="password">Contraseña:</label>

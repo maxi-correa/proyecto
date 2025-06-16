@@ -25,8 +25,8 @@ html, body {
 }
 
 .main-content {
-    flex: 1;
-    display: flex;
+    flex: 1; /* ocupa el espacio restante */
+    display: flex; /* para centrar el contenido */
     justify-content: center;
     align-items: center;
     background-color: #f2f2f2; /* o el fondo que prefieras */
@@ -137,15 +137,23 @@ form .boton-volver:hover {
     
 }
 
-.imagen-logout img {
-    height: 32px; /* o la altura que tenga tu navbar */
+.imagen-logout {
+    height: 24px; /* altura aprox de navbar */
     width: auto;
     object-fit: contain;
     vertical-align: middle;
     transition: opacity 0.2s ease;
 }
 
-.imagen-logout img:hover {
+.imagen-menu {
+    height: 32px; /* altura aprox de navbar */
+    width: auto;
+    object-fit: contain; 
+    vertical-align: middle;
+    transition: opacity 0.2s ease;
+}
+
+.imagen-menu:hover {
     opacity: 0.7;
     cursor: pointer;
 }
@@ -354,4 +362,32 @@ form .boton-volver:hover {
 
 audio {
     display: none; /* Oculta el reproductor nativo */
+}
+
+.menu-desplegable {
+    display: none; /* Oculto por defecto */
+    position: absolute; /* Posición absoluta para que se superponga al contenido */
+    top: 50px; /* Sirve para posicionar el menú debajo del botón */
+    right: 10px; /* Alineado a la derecha */
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.menu-desplegable a {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #ddd;
+}
+
+.menu-desplegable a:hover {
+    background-color: #e2e6ea;
+}
+
+.menu-desplegable a:last-child {
+    border-bottom: none;
 }

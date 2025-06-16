@@ -27,7 +27,7 @@
 
     <form action="<?= site_url('recuperar/procesar') ?>" method="post">
         <label for="email">Correo electrónico:</label>
-        <input type="email" name="email" required>
+        <input type="email" name="email" value="<?= old('email') ?>" id="email">
         <button type="submit">Enviar e-mail</button>
         <br><br>
         <button type="button"  class="boton-volver" onclick="window.location.href='<?= base_url('login') ?>'">Volver</button>

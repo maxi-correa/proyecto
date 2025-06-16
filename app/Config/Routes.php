@@ -22,6 +22,10 @@ $routes->get('logout', 'MainController::logout');
 $routes->get('recuperar', 'AuthController::recuperarContrasena');
 $routes->post('recuperar/procesar', 'AuthController::procesarRecuperarContrasena');
 
+//RUTA PARA CAMBIAR CONTRASEÑA
+$routes->get('cambiar_contrasena', 'PasswordController::cambiarContrasena');
+$routes->post('cambiar_contrasena/procesar', 'PasswordController::procesarCambiarContrasena');
+
 //RUTAS PARA CONFIGURACIÓN DE SETUP
 $routes->get('setup', 'SetupController::index');
 $routes->get('setup/exito', 'SetupController::exito');

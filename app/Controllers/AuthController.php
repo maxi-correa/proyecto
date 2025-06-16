@@ -3,13 +3,46 @@ namespace App\Controllers;
 
 class AuthController extends BaseController
 {
-    public function login()
+    /** ---------------------------------------
+     * FUNCIONES QUE AYUDAN A LAS SIGUIENTES 
+     * ---------------------------------------*/
+    
+    public function comprobar_bd()
+    {
+        $db = db_connect();
+        
+        try{
+            // Verificar si la base de datos existe
+            $dbName = env('database.default.database'); // Nombre de la base de datos
+            $consulta = $db->query("SHOW DATABASES LIKE '$dbName'");
+
+        } catch (\Exception $e) {
+            return false; // Si hay un error al conectarse, la base de datos no existe
+        }
+
+        if ($consulta->getNumRows() > 0) {
+            return true; // La base de datos existe
+        } else {
+            return false; // La base de datos no existe
+        }
+    }
+
+    public function verificar_logueo()
     {
         // Verificar si el usuario ya está autenticado
         if (session()->get('logueado')) {
             // Redirigir a la página principal si ya está autenticado
             return redirect()->to('/');
         }
+    }
+
+    /** -----------------------------------------------
+     * FUNCIONES QUE PERMITEN EL ACCESO A LA APLICACIÓN 
+     * -----------------------------------------------*/
+
+    public function login()
+    {
+        $this->verificar_logueo(); // Verificar si el usuario ya está logueado
         
         $existe_bd = $this->comprobar_bd();
         
@@ -19,6 +52,8 @@ class AuthController extends BaseController
 
     public function procesarLogin()
     {
+        $this->verificar_logueo(); // Verificar si el usuario ya está logueado
+
         $request = \Config\Services::request(); // Obtener el servicio de solicitud
 
         $email = $request->getPost('email');
@@ -53,18 +88,22 @@ class AuthController extends BaseController
             session()->set('apellido', $usuario['apellido']);
             return redirect()->to('/');
         } else {
-            return redirect()->to('/login')->with('error', 'Credenciales incorrectas.');
+            return redirect()->to('/login')->withInput()->with('error', 'Credenciales incorrectas.');
         }
     }
 
     public function registro()
     {
+        $this->verificar_logueo(); // Verificar si el usuario ya está logueado
+        
         // Cargar la vista de registro
         return view('registro');
     }
 
     public function procesarRegistro()
     {
+        $this->verificar_logueo(); // Verificar si el usuario ya está logueado
+
         $request = \Config\Services::request(); // Obtener el servicio de solicitud
         
         $datos = [
@@ -117,28 +156,16 @@ class AuthController extends BaseController
         }
     }
 
-    public function comprobar_bd()
-    {
-        $db = db_connect();
-        
-        try{
-            // Verificar si la base de datos existe
-            $dbName = env('database.default.database'); // Nombre de la base de datos
-            $consulta = $db->query("SHOW DATABASES LIKE '$dbName'");
-
-        } catch (\Exception $e) {
-            return false; // Si hay un error al conectarse, la base de datos no existe
-        }
-
-        if ($consulta->getNumRows() > 0) {
-            return true; // La base de datos existe
-        } else {
-            return false; // La base de datos no existe
-        }
-    }
 
     public function recuperarContrasena()
     {
+        $this->verificar_logueo(); // Verificar si el usuario ya está logueado
+
+        $existe_bd = $this->comprobar_bd();
+        if (!$existe_bd) {
+            return redirect()->to('/login')->with('error', 'La base de datos no existe.');
+        }
+
         // Cargar la vista de recuperar contraseña
         return view('recuperarContrasena');
     }
@@ -159,7 +186,7 @@ class AuthController extends BaseController
         $usuario = $usuarioModel->where('email', $email)->first();
         
         if (!$usuario) {
-            return redirect()->to('/recuperar')->with('error', 'El usuario no existe.');
+            return redirect()->to('/recuperar')->withInput()->with('error', 'El usuario no existe.');
         }
 
         if($usuario)
@@ -175,7 +202,7 @@ class AuthController extends BaseController
             if ($servicioEmail->send()) {
                 return redirect()->to('/login')->with('exito', 'Se ha enviado un correo electrónico con la nueva contraseña.');
             } else {
-                return redirect()->to('/recuperar')->with('error', 'No se pudo enviar el correo electrónico.');
+                return redirect()->to('/recuperar')->withInput()->with('error', 'No se pudo enviar el correo electrónico.');
             }
         }
     }
