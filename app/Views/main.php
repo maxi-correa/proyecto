@@ -16,19 +16,37 @@ use Config\Constants;
         <div class="usuario-info">
             Bienvenido, <?= esc($nombre) . ' ' . esc($apellido) ?>
         </div>
-        <div class="audio-control" id="audio-control" style="display: none;">
+        <div class="audio-control" id="musica-control" style="display: none;">
+            <span class="usuario-info">Música de Fondo:</span>
             <audio id="musica" src="<?= base_url('assets/audio/Tema_principal.mp3') ?>" loop></audio>
             <button onclick="reproducir()">
                 <i class="fa-solid fa-play" id="icono_reproducir" title="Reproducir/Pausar"></i>
             </button>
             <input type="range" id="volumen" min="0" max="1" step="0.01" value="0.2">
         </div>
+        <div class="audio-control" id="sonido-control" style="display: none;">
+            <span class="usuario-info">Efectos de Sonido:</span>
+            <audio id="sonido" src="<?= base_url('assets/audio/sonido_click.mp3') ?>"></audio>
+            <input type="range" id="volumen" min="0" max="1" step="0.01" value="0.2">
+        </div>
         <div>
             <img src="<?= base_url('assets/img/menu.png') ?>" alt="menu" class="imagen-menu" onclick="menu_desplegable()">
         </div>
-        <div id="menu" class="menu-desplegable">
+        <div id="menu" class="menu-desplegable" style="display: none;">
             <a href="<?= base_url('cambiar_contrasena') ?>">Cambiar Contraseña</a>
-            <a href="#" onclick="habilitar_sonido()">Sonido</a>
+
+            <div class="submenu-contenedor">
+                <a href="#" onclick="habilitar_sonido(event)">Sonido</a>
+                <div id="subMenuSonido" class="submenu-sonido oculto">
+                    <a href="#">
+                        <label><input type="checkbox" id="activarMusica" onchange="mostrarMusicaControl()"> Música de Fondo</label>
+                    </a>
+                    <a href="#">
+                        <label><input type="checkbox" id="activarEfectos" onchange="mostrarEfectoControl()"> Efectos de Sonido</label>
+                    </a>
+                </div>
+            </div>
+
             <a href="<?= base_url('logout') ?>">
                 <img src="<?= base_url('assets/img/cerrar_sesion.png') ?>" alt="Cerrar Sesión" class="imagen-logout"> Cerrar Sesión
             </a>
@@ -67,19 +85,50 @@ use Config\Constants;
 
         function menu_desplegable() {
             const menu = document.getElementById('menu');
-            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
         }
 
         document.addEventListener('click', function(event) {
+            // Cierra el submenú de sonido si se hace clic fuera de él
+            const submenu = document.getElementById('subMenuSonido');
+            const sonidoLink = event.target.closest('a');
+            if (!submenu.contains(event.target) && (!sonidoLink || sonidoLink.textContent.trim() !== 'Sonido')) {
+                submenu.classList.add('oculto');
+            }
+            // Cierra el menú si se hace clic fuera de él
             const menu = document.getElementById('menu');
             if (!menu.contains(event.target) && !event.target.matches('.imagen-menu')) {
                 menu.style.display = 'none';
             }
         });
 
-        function habilitar_sonido() {
-            const audioControl = document.getElementById('audio-control');
-            audioControl.style.display = (audioControl.style.display === 'none') ? 'block' : 'none';
+        function habilitar_sonido(event) 
+        {
+            event.preventDefault(); //evita que <a> se recargue
+            const submenu = document.getElementById('subMenuSonido');
+            submenu.classList.toggle('oculto');
+        }
+
+        function mostrarMusicaControl() {
+            const musicaControl = document.getElementById('musica-control');
+            const activarMusica = document.getElementById('activarMusica');
+
+            if (activarMusica.checked) {
+                musicaControl.style.display = 'block';
+            } else {
+                musicaControl.style.display = 'none';
+            }
+        }
+
+        function mostrarEfectoControl() {
+            const sonidoControl = document.getElementById('sonido-control');
+            const activarEfectos = document.getElementById('activarEfectos');
+
+            if (activarEfectos.checked) {
+                sonidoControl.style.display = 'block';
+            } else {
+                sonidoControl.style.display = 'none';
+            }
         }
     </script>
 </body>
