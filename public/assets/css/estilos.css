@@ -87,13 +87,26 @@ form label {
 
 form input[type="email"],
 form input[type="password"],
-form input[type="text"] {
+form input[type="text"],
+form input[type="date"],
+form select {
     width: 100%; /* ocupa todo el ancho del contenedor */
     padding: 10px; /* espacio interno */
     margin-bottom: 15px; /* espacio entre inputs */
     border: 1px solid #ccc;
     border-radius: 8px;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif; /* fuente Poppins */
+    font-size: 14px; /* tamaño de fuente */
+}
+
+form select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg fill='%23333' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center; /* posición del ícono de flecha */
 }
 
 /* Botón */

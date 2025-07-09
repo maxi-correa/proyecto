@@ -14,7 +14,7 @@ use Config\Constants;
 <body>
     <header class="navbar">
         <div class="usuario-info">
-            Bienvenido, <?= esc($nombre) . ' ' . esc($apellido) ?>
+            Bienvenido, <?= esc($nombre)?>
         </div>
         <div class="audio-control" id="musica-control" style="display: none;">
             <span class="usuario-info">Música de Fondo:</span>

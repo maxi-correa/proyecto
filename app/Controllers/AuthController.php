@@ -44,10 +44,8 @@ class AuthController extends BaseController
     {
         $this->verificar_logueo(); // Verificar si el usuario ya está logueado
         
-        $existe_bd = $this->comprobar_bd();
-        
         // Cargar la vista de inicio de sesión
-        return view('login', ['existe_bd' => $existe_bd]);
+        return view('login');
     }
 
     public function procesarLogin()
@@ -56,16 +54,16 @@ class AuthController extends BaseController
 
         $request = \Config\Services::request(); // Obtener el servicio de solicitud
 
-        $email = $request->getPost('email');
+        $nombre = $request->getPost('nombre');
         $password = $request->getPost('password');
 
         //Verificar que los campos no estén vacíos
-        if (empty($email) || empty($password)) {
-            return redirect()->to('/login')->with('error', 'El correo electrónico y la contraseña son obligatorios.');
+        if (empty($nombre) || empty($password)) {
+            return redirect()->to('/login')->with('error', 'El nombre de usuario y la contraseña son obligatorios.');
         }
-        // Validar que el email tenga un formato correcto
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return redirect()->to('/login')->with('error', 'El correo electrónico no es válido.');
+        // Validar que el nombre de usuario tenga un formato correcto
+        if (!preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑ_]{4,}$/', $nombre)) {
+            return redirect()->to('/login')->with('error', 'El nombre de usuario no es válido.');
         }
         
         // Si el password no es numérico o no tiene 6 caracteres, redirigir con error
@@ -74,7 +72,7 @@ class AuthController extends BaseController
         }
 
         $usuarioModel = new \App\Models\UsuarioModel();
-        $usuario = $usuarioModel->where('email', $email)->first();
+        $usuario = $usuarioModel->where('nombreUsuario', $nombre)->first();
         // Verificar si el usuario existe y si la contraseña es correcta
         if (!$usuario) {
             return redirect()->to('/login')->with('error', 'El usuario no existe.');
@@ -84,8 +82,7 @@ class AuthController extends BaseController
             // Iniciar sesión
             session()->set('logueado', true);
             session()->set('id', $usuario['id']);
-            session()->set('nombre', $usuario['nombre']);
-            session()->set('apellido', $usuario['apellido']);
+            session()->set('nombre', $usuario['nombreUsuario']);
             return redirect()->to('/');
         } else {
             return redirect()->to('/login')->withInput()->with('error', 'Credenciales incorrectas.');
@@ -96,8 +93,11 @@ class AuthController extends BaseController
     {
         $this->verificar_logueo(); // Verificar si el usuario ya está logueado
         
+        $paisModel = new \App\Models\PaisModel();
+        $data['paises'] = $paisModel->obtenerTodos();
+
         // Cargar la vista de registro
-        return view('registro');
+        return view('registro', $data);
     }
 
     public function procesarRegistro()
@@ -107,9 +107,10 @@ class AuthController extends BaseController
         $request = \Config\Services::request(); // Obtener el servicio de solicitud
         
         $datos = [
-            'nombre' => $request->getPost('nombre'),
-            'apellido' => $request->getPost('apellido'),
+            'nombreUsuario' => $request->getPost('nombre'),
             'email' => $request->getPost('email'),
+            'fechaNacimiento' => $request->getPost('nacimiento'),
+            'idPais' => $request->getPost('pais'),
             'password' => password_hash($request->getPost('password'), PASSWORD_DEFAULT),
             'creado_en' => date('Y-m-d H:i:s'),
         ];
@@ -118,24 +119,40 @@ class AuthController extends BaseController
         $password_verificado = $request->getPost('confirmar_password');
         
         // Validar que los campos no estén vacíos
-        if (empty($datos['nombre']) || empty($datos['apellido']) || empty($datos['email']) || empty($password) || empty($password_verificado)) {
+        if (empty($datos['nombreUsuario']) || empty($datos['email']) || empty($datos['fechaNacimiento']) || empty($datos['idPais']) || empty($password) || empty($password_verificado)) {
             return redirect()->to('/registro')->withInput()->with('error', 'Todos los campos son obligatorios.');
         }
 
-        // Validar que el nombre y el apellido solo contengan letras y espacios
-        if (!preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/', $datos['nombre']) || !preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/', $datos['apellido'])) {
-            return redirect()->to('/registro')->withInput()->with('error', 'El nombre y el apellido solo pueden contener letras y espacios.');
+        // Validar que el nombre solo contenga letras, guiones bajos sin espacios y un mínimo de 4 caracteres
+        if (!preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑ_]{4,}$/', $datos['nombreUsuario'])) {
+            return redirect()->to('/registro')->withInput()->with('error', 'El nombre solo puede contener letras y guiones bajos sin espacios y debe tener al menos 4 caracteres.');
+        }
+        
+        //Validar que el nombre de usuario no se repita
+        $usuarioModel = new \App\Models\UsuarioModel();
+        $usuarioExistente = $usuarioModel->where('nombreUsuario', $datos['nombreUsuario'])->first();
+        if ($usuarioExistente) {
+            return redirect()->to('/registro')->withInput()->with('error', 'El nombre de usuario ya está registrado.');
         }
         
         // Validar que el email tenga un formato correcto
         if (!filter_var($datos['email'], FILTER_VALIDATE_EMAIL)) {
             return redirect()->to('/registro')->withInput()->with('error', 'El correo electrónico no es válido.');
         }
+
         // Validar que el email no esté ya registrado
-        $usuarioModel = new \App\Models\UsuarioModel();
-        $usuario = $usuarioModel->where('email', $datos['email'])->first();
-        if ($usuario) {
+        $mailExistente = $usuarioModel->where('email', $datos['email'])->first();
+        if ($mailExistente) {
             return redirect()->to('/registro')->withInput()->with('error', 'El correo electrónico ya está registrado.');
+        }
+
+        // Validar que la fecha de nacimiento este hasta 100 años en el pasado pero al menos 6 años atrás
+        $fechaNacimiento = $datos['fechaNacimiento'];
+        $fechaActual = date('Y-m-d');
+        $fechaLimite = date('Y-m-d', strtotime('-6 years', strtotime($fechaActual)));
+        $fechaLimiteMax = date('Y-m-d', strtotime('-100 years', strtotime($fechaActual)));
+        if ($fechaNacimiento > $fechaLimite || $fechaNacimiento < $fechaLimiteMax) {
+            return redirect()->to('/registro')->withInput()->with('error', 'La fecha de nacimiento debe ser al menos 6 años atrás y no más de 100 años atrás.');
         }
 
         // Si el password no es numérico o no tiene 6 caracteres, redirigir con error

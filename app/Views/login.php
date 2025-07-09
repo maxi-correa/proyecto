@@ -31,9 +31,9 @@
     <?php endif; ?>
 
     <form action='<?= base_url('login/procesar') ?>' method='post'>
-        <label for="email">Correo electrónico:</label>
-        <input type='email' name='email' id='email' value="<?= old('email') ?>">
-        
+        <label for="nombre">Nombre de Usuario:</label>
+        <input type='text' name='nombre' id='nombre' value="<?= old('nombre') ?>">
+
         <div class="password-container">
             <label for="password">Contraseña:</label>
             <i class="fa-solid fa-eye-slash toggle-password" onclick="togglePassword()"></i>
@@ -44,7 +44,6 @@
     </form>
     <p>¿No tienes una cuenta? <a href="<?= base_url('registro') ?>">Regístrate aquí</a></p>
     <p>¿Olvidaste tu contraseña? <a href="<?= base_url('recuperar') ?>">Recuperar</a></p>
-    <button type="button" <?= $existe_bd ? 'disabled' : '' ?>  class="boton-bd <?= $existe_bd ? 'disabled' : '' ?>" onclick="window.location.href='<?= base_url('setup') ?>'">Crear Base de Datos</button>
     </div>
     </main>
 
