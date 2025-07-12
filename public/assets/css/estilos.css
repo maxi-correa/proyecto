@@ -103,9 +103,9 @@ form select {
 form select {
     appearance: none;
     -webkit-appearance: none;
-    -moz-appearance: none;
+    -moz-appearance: none; /* para eliminar el estilo por defecto del select */
     background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg fill='%23333' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; /* no repetir el ícono */
     background-position: right 10px center; /* posición del ícono de flecha */
 }
 
@@ -114,6 +114,7 @@ form button {
     width: 100%;
     background-color: #007bff;
     color: white;
+    font-family: 'Poppins', sans-serif; /* fuente Poppins */
     font-weight: bold;
     padding: 10px;
     border: none;
@@ -252,10 +253,11 @@ form .boton-volver:hover {
 }
 
 /* Boton para crear base de datos */
-.boton-bd {
+.boton-partida {
     width: 100%;
-    background-color: #009129;
+    background-color: #007bff;
     color: white;
+    font-family: 'Poppins', sans-serif; /* fuente Poppins */
     font-weight: bold;
     padding: 10px;
     border: none;
@@ -265,11 +267,11 @@ form .boton-volver:hover {
     transition: background-color 0.3s ease; /* transición suave al cambiar el color de fondo */
 }
 
-.boton-bd:hover {
-    background-color: #007a33;
+.boton-partida:hover {
+    background-color: #0056b3;
 }
 
-.boton-bd.disabled {
+.boton-partida.disabled {
     background-color: #ccc; /* color gris para el botón deshabilitado */
     cursor: not-allowed; /* cambia el cursor a no permitido */
 }
@@ -277,7 +279,9 @@ form .boton-volver:hover {
 .boton-volver {
     display: inline-block;
     background-color: #dc3545;
-    width: 50%;
+    width: 100%;
+    font-family: 'Poppins', sans-serif; /* fuente Poppins */
+    font-weight: bold;
     color: white;
     padding: 10px;
     border: none;
@@ -433,5 +437,36 @@ audio {
 
 .menu-desplegable a:last-child {
     border-bottom: none;
+}
+
+.opciones-imagenes {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+    gap: 10px;
+}
+
+.opciones-imagenes input[type="radio"] {
+    display: none;
+}
+
+.opciones-imagenes label {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.opciones-imagenes img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border: 3px solid transparent;
+    border-radius: 15px;
+    padding: 5px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.opciones-imagenes input[type="radio"]:checked + label img {
+    border-color: #007bff;
+    transform: scale(1.1);
 }
 

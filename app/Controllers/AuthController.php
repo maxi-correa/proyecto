@@ -83,7 +83,7 @@ class AuthController extends BaseController
             session()->set('logueado', true);
             session()->set('id', $usuario['id']);
             session()->set('nombre', $usuario['nombreUsuario']);
-            return redirect()->to('/');
+            return redirect()->to('/partida')->with('exito', 'Inicio de sesión exitoso.');
         } else {
             return redirect()->to('/login')->withInput()->with('error', 'Credenciales incorrectas.');
         }
