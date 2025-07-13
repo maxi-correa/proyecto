@@ -28,7 +28,7 @@
             <?php endif; ?>
             <button class="boton-partida" onclick="location.href='<?= base_url('partida/crear') ?>'">Crear Partida</button>
             <br><br>
-            <button class="boton-partida" onclick="location.href='<?= base_url('partida/existente') ?>'">Unirse a Partida Existente</button>
+            <button class="boton-partida" onclick="location.href='<?= base_url('partida/unirse') ?>'">Unirse a Partida Existente</button>
             <br><br>
             <button class="boton-volver" onclick="location.href='<?= base_url('logout') ?>'">Cerrar Sesión</button>
         </div>

@@ -31,8 +31,20 @@ $routes->get('partida', 'PartidaController::eleccionPartida');
 
 //RUTAS PARA CREAR PARTIDA
 $routes->get('partida/crear', 'PartidaController::vistaCrearPartida');
-$routes->post('partida/crear', 'PartidaController::crearPartida');
+$routes->post('partida/crear/procesar', 'PartidaController::crearPartida');
 $routes->get('partida/espera/(:num)', 'PartidaController::espera/$1');
+
+//RUTAS PARA UNIRSE A PARTIDA EXISTENTE
+$routes->get('partida/unirse', 'PartidaController::listarPartidas');
+$routes->post('partida/unirse/procesar', 'PartidaController::unirsePartida');
+$routes->get('partida/verificar_espera/(:num)', 'PartidaController::verificarEspera/$1');
+$routes->get('partida/estado/(:num)', 'PartidaController::estadoPartida/$1');
+
+//RUTA PARA LA ASIGNACIÓN DE TURNOS
+$routes->get('partida/turnos/(:num)', 'PartidaController::asignarTurnos/$1');
+
+//RUTAS PARA SALIR DE PARTIDA
+$routes->get('partida/salir_espera/(:num)', 'PartidaController::salirDeEspera/$1');
 
 //RUTAS PARA CONFIGURACIÓN DE SETUP (NO SE USARÁN)
 $routes->get('setup', 'SetupController::index');

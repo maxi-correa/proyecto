@@ -56,7 +56,7 @@
             </div>
 
             <!-- Botón para continuar -->
-            <form action="<?= base_url('partida/crear') ?>" method="post">
+            <form action="<?= base_url('partida/crear/procesar') ?>" method="post">
                 <input type="hidden" name="cantidad_jugadores" id="jugadoresSeleccionado">
                 <input type="hidden" name="tamano_tablero" id="tableroSeleccionado">
                 <button type="submit">Crear Partida</button>
