@@ -177,33 +177,41 @@ class PartidaController extends BaseController
 
         $partida = $partidaModel->find($idPartida);
         if (!$partida) {
-            return redirect()->to('/partida/listar')->with('error', 'Partida no encontrada.');
+            return redirect()->to('/partida/unirse')->with('error', 'Partida no encontrada.');
+        }
+        
+        // Verificamos si ya se asignaron turnos
+        $hayTurnosAsignados = $usuarioPartidaModel
+        ->where('idPartida', $idPartida)
+        ->where('ordenTurnos IS NOT', null)
+        ->countAllResults() > 0;
+        
+        if (!$hayTurnosAsignados) {
+            // Obtenemos todos los jugadores de esa partida
+            $jugadores = $usuarioPartidaModel
+            ->where('idPartida', $idPartida)
+            ->findAll();
+            
+            // Hacemos el shuffle solo si NADIE tiene turno
+            shuffle($jugadores);
+            
+            $db = \Config\Database::connect();
+            
+            $orden = 1;
+            foreach ($jugadores as $jugador) {
+                $db->query( //Lo hago extraordinariamente con query porque CI no funciona bien con claves compuestas
+                    "UPDATE partidas_usuarios 
+                    SET ordenTurnos = ? 
+                    WHERE idPartida = ? AND idUsuario = ?",
+                    [$orden, $jugador['idPartida'], $jugador['idUsuario']]
+                );
+            $orden++;
+            }
         }
 
-        // Obtenemos todos los jugadores de esa partida
         $jugadores = $usuarioPartidaModel
             ->where('idPartida', $idPartida)
             ->findAll();
-
-        // Verificamos si ya se asignaron turnos
-        $hayTurnosAsignados = $usuarioPartidaModel
-            ->where('idPartida', $idPartida)
-            ->where('ordenTurnos IS NOT', null)
-            ->countAllResults() > 0;
-
-        if (!$hayTurnosAsignados) {
-            // Hacemos el shuffle solo si NADIE tiene turno
-            shuffle($jugadores);
-
-            $orden = 1;
-            foreach ($jugadores as $jugador) {
-                $usuarioPartidaModel->update(
-                    ['idPartida' => $jugador['idPartida'], 'idUsuario' => $jugador['idUsuario']],
-                    ['ordenTurnos' => $orden]
-                );
-                $orden++;
-            }
-        }
 
         // Obtener nombres
         $jugadoresConNombre = [];
@@ -211,7 +219,7 @@ class PartidaController extends BaseController
             $usuario = $usuarioModel->find($jugador['idUsuario']);
             $jugadoresConNombre[] = [
                 'nombre' => $usuario['nombreUsuario'],
-                'turno' => $jugador['ordenTurnos'] ?? null
+                'turno' => $jugador['ordenTurnos'] ?? null // Si no tiene turno, será null
             ];
         }
 
