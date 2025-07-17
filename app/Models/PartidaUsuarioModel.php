@@ -5,16 +5,20 @@ use CodeIgniter\Model;
 class PartidaUsuarioModel extends Model
 {
     protected $table = 'partidas_usuarios';
-    protected $primaryKey = 'idPartidaUsuario';
-    protected $useAutoIncrement = true;
 
-    // Campos que se pueden insertar o actualizar
+    // Indicamos que no hay clave primaria simple
+    protected $primaryKey = 'idPartida,idUsuario'; // Solo para evitar errores, no la usaremos directamente
+
     protected $allowedFields = [
         'idPartida',
         'idUsuario',
-        'ordenTurno',
+        'ordenTurnos',
         'puntos',
     ];
-    
+
+    protected $useAutoIncrement = false;
     protected $useTimestamps = false;
+
+    // IMPORTANTE: desactivamos la validación de clave primaria para evitar errores de CI
+    protected $skipValidation = true;
 }

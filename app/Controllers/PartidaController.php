@@ -35,11 +35,13 @@ class PartidaController extends BaseController
         ], true); // 'true' para devolver el ID insertado
 
         // Insertamos al primer jugador en la partida
-        $partidaUsuarioModel = new \App\Models\PartidaUsuarioModel();
-        $partidaUsuarioModel->insert([
+        //CORREGIDO: Fue necesario usar el método de conexión directa a la base de datos
+        $db = \Config\Database::connect();
+        $db->table('partidas_usuarios')->insert([
             'idPartida' => $idPartida,
             'idUsuario' => $idUsuario,
-            'orden_turno' => null, // se sorteará después
+            'ordenTurnos' => null,
+            'puntos' => 0
         ]);
 
     return redirect()->to('/partida/espera/' . $idPartida);
@@ -134,13 +136,17 @@ class PartidaController extends BaseController
             if ($cantidadConectados >= $partida['cantidad_jugadores']) {
                 return redirect()->to('/partida/unirse')->with('error', 'La partida ya está llena.');
             }
-
-            // Insertar jugador a la partida
-            $partidaUsuarioModel->insert([
-                'idPartida' => $idPartida,
-                'idUsuario' => $idUsuario,
-                'orden_turno' => null,
+            
+            // Insertar al usuario en la partida
+            // CORREGIDO: Fue necesario usar el método de conexión directa a la base de datos
+            $db = \Config\Database::connect();
+            $db->table('partidas_usuarios')->insert([
+            'idPartida' => $idPartida,
+            'idUsuario' => $idUsuario,
+            'ordenTurnos' => null,
+            'puntos' => 0
             ]);
+            
         }
         return redirect()->to('/partida/espera/' . $idPartida);
     }
@@ -207,6 +213,9 @@ class PartidaController extends BaseController
                 );
             $orden++;
             }
+
+            //Se cambia el estado de la partida a "en curso"
+            $partidaModel->update($idPartida, ['estado' => 'en curso']);
         }
 
         $jugadores = $usuarioPartidaModel

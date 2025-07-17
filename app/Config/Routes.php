@@ -43,6 +43,11 @@ $routes->get('partida/estado/(:num)', 'PartidaController::estadoPartida/$1');
 //RUTA PARA LA ASIGNACIÓN DE TURNOS
 $routes->get('partida/turnos/(:num)', 'PartidaController::asignarTurnos/$1');
 
+//RUTAS PARA EL JUEGO
+$routes->get('partida/jugar/(:num)', 'MainController::jugar/$1');
+$routes->get('partida/estadoAJAX/(:num)', 'MainController::estadoAJAX/$1');
+$routes->post('partida/jugarAJAX', 'MainController::jugarAJAX');
+
 //RUTAS PARA SALIR DE PARTIDA
 $routes->get('partida/salir_espera/(:num)', 'PartidaController::salirDeEspera/$1');
 
