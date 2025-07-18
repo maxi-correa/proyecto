@@ -48,6 +48,9 @@ $routes->get('partida/jugar/(:num)', 'MainController::jugar/$1');
 $routes->get('partida/estadoAJAX/(:num)', 'MainController::estadoAJAX/$1');
 $routes->post('partida/jugarAJAX', 'MainController::jugarAJAX');
 
+//RUTAS PARA RESULTADOS DE PARTIDA
+$routes->get('partida/resultados/(:num)', 'PartidaController::mostrarResultados/$1');
+
 //RUTAS PARA SALIR DE PARTIDA
 $routes->get('partida/salir_espera/(:num)', 'PartidaController::salirDeEspera/$1');
 

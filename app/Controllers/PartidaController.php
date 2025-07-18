@@ -237,4 +237,44 @@ class PartidaController extends BaseController
             'jugadores' => $jugadoresConNombre
         ]);
     }
+
+    public function mostrarResultados($idPartida)
+    {
+        $partidaModel = new \App\Models\PartidaModel();
+        $partidaUsuarioModel = new \App\Models\PartidaUsuarioModel();
+        $usuarioModel = new \App\Models\UsuarioModel();
+
+        $partida = $partidaModel->find($idPartida);
+
+        if (!$partida) {
+            return redirect()->to('/')->with('error', 'Partida no encontrada');
+        }
+
+        // Si no está finalizada, redirigir
+        if ($partida['estado'] !== 'finalizada') {
+            return redirect()->to('/')->with('error', 'La partida aún está en curso');
+        }
+
+        // Obtener los jugadores con sus puntajes
+        $jugadores = $partidaUsuarioModel->where('idPartida', $idPartida)->findAll();
+
+        // Preparar array con nombre y puntos
+        $resultados = [];
+        foreach ($jugadores as $jugador) {
+            $usuario = $usuarioModel->find($jugador['idUsuario']);
+            $resultados[] = [
+                'nombre' => $usuario['nombreUsuario'],
+                'puntos' => $jugador['puntos'],
+                'esGanador' => ($jugador['idUsuario'] == $partida['idGanador']) // Verifica si es el ganador
+            ];
+        }
+
+        // Ordenar por puntaje descendente
+        usort($resultados, fn($a, $b) => $b['puntos'] <=> $a['puntos']);
+
+        return view('resultados', [
+            'resultados' => $resultados,
+            'idPartida' => $idPartida
+        ]);
+    }
 }
