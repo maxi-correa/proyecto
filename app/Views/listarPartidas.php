@@ -9,7 +9,7 @@
 <body>
 <div class="body-formulario">
     <main class="main-content">
-        <div class="formulario">
+        <div class="formulario formulario-menu">
             <h1>Partidas Disponibles</h1>
             <?php if (empty($partidas)): ?>
                 <p>No hay partidas disponibles por ahora.</p>
@@ -35,7 +35,7 @@
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
-            <button class="boton-volver" onclick="location.href='<?= base_url('partida') ?>'">Volver a Menú Principal</button>
+            <button class="boton-volver" onclick="location.href='<?= base_url('partida') ?>'">Volver al menú principal</button>
         </div>
     </main>
     <?= view('capas/pie') ?>

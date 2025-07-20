@@ -1,4 +1,5 @@
 <!-- Vista para la asignación de turnos -->
+<?php use Config\Constants; ?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -38,7 +39,36 @@
 <div class="body-formulario">
     <main class="main-content">
         <div class="formulario">
-            <h1>Asignando Turnos...</h1>
+            <h1>¡Bienvenidos a <?= Constants::getNombre() ?>!</h1>
+            <!-- Tabla resumen del historial -->
+            <?php if ($resumen['tipo'] === 'historial'): ?>
+                <table class="tabla-exito">
+                    <thead>
+                    <tr><th colspan="2">Última partida entre jugadores</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>Fecha</td><td><?= esc($resumen['fecha']) ?></td></tr>
+                    <tr><td>Hora</td><td><?= esc($resumen['hora']) ?></td></tr>
+                    <tr><td>Ganador</td><td><?= esc($resumen['ganador']) ?></td></tr>
+                    </tbody>
+                </table>
+            <!-- Si no es historial, mostrar ranking -->
+            <?php elseif ($resumen['tipo'] === 'ranking'): ?>
+                <table class="tabla-exito">
+                    <thead>
+                    <tr><th colspan="2">Victorias históricas</th></tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($resumen['victorias'] as $nombre => $cant): ?>
+                        <tr>
+                            <td><?= esc($nombre) ?></td>
+                            <td><?= $cant ?> victoria<?= $cant == 1 ? '' : 's' ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
+            
             <p>¡Si mayor es el número, jugarás primero!</p>
             <div class="numeros-container" id="numeros"></div>
             <div id="lista-turnos"></div>

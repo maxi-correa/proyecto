@@ -9,19 +9,17 @@ html, body {
     color: #222;
     text-align: center;
     height: 100%; /* ocupa toda la altura de la ventana */
+
 }
 
 .body-formulario {
-    font-family: 'Poppins', sans-serif;
     background-color: #f2f2f2;
-    margin: 0;
-    height: 100vh; /* ocupa toda la altura de la ventana */
-
+    min-height: 100vh;
     display: flex;
-    flex-direction: column; /* apila los elementos verticalmente */
-    min-height: 100vh; /* asegura que ocupe al menos toda la altura de la ventana */
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center;     /* Centra verticalmente */
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0; /* agrega padding superior e inferior */
+    overflow-y: auto; /* permite scroll si el contenido es más alto */
 }
 
 .main-content {
@@ -63,11 +61,17 @@ h1 {
 /* Contenedor del formulario */
 .formulario {
     background-color: #fff;
-    padding: 30px 40px; /* espacio interno */
+    padding: 30px 40px;
     border-radius: 15px;
     box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 800px; /* subí de 400px a 800px */
+    box-sizing: border-box;
+}
+
+.formulario-menu {
+    max-width: 500px; /* o el valor que quede bien visualmente */
     width: 100%;
-    max-width: 400px;
 }
 
 /* Título */
@@ -199,57 +203,60 @@ form .boton-volver:hover {
 
 .tabla-exito {
     width: 80%;
-    max-width: 900px;
-    margin: 2rem auto;
+    max-width: 600px;
+    margin: 20px auto;
     border-collapse: collapse;
-    background-color: #f1fdf6; /* fondo verdoso claro */
-    border: 2px solid #2e7d32;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(46, 125, 50, 0.2); /* sombra verde */
+    background-color: #f0fff0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
+.tabla-exito th,
 .tabla-exito td {
-    border: 1px solid #81c784;
-    padding: 1.5rem;
-    vertical-align: middle;
-    font-family: 'Rubik', sans-serif;
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
 }
 
-.tabla-exito tr:last-child td {
-    text-align: center;
-    padding-top: 1rem;
+.tabla-exito thead th {
+    border: 1px solid #ccc;
+}
+
+.tabla-exito thead {
+    background-color: #d0f0d0;
+    font-weight: bold;
+}
+
+.tabla-exito tbody tr:nth-child(even) {
+    background-color: #f9fff9;
+}
+
+.tabla-exito tbody tr:nth-child(odd) {
+    background-color: #ffffff;
 }
 
 /* ESTILOS PARA BOTONES */
 
-.boton-reintentar {
-    display: inline-block;
-    background-color: #c62828;         /* Rojo intenso */
-    color: #ffffff;                    /* Texto blanco */
-    padding: 0.6rem 1.2rem;            /* Tamaño cómodo de botón */
-    font-size: 1rem;
+.boton-ranking {
+    width: 100%;
+    background-color: #28a745; /* verde fuerte */
+    color: white;
+    font-family: 'Poppins', sans-serif; /* fuente Poppins */
     font-weight: bold;
-    text-decoration: none;             /* Si es <a>, quitar subrayado */
+    padding: 10px;
     border: none;
-    border-radius: 6px;                /* Bordes redondeados */
-    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2); /* Sombra “baja” para dar relieve */
+    border-radius: 8px;
+    font-size: 16px;
     cursor: pointer;
-    transition: 
-    background-color 0.2s ease,
-    transform 0.1s ease,
-    box-shadow 0.1s ease; 
+    transition: background-color 0.3s ease; /* transición suave al cambiar el color de fondo */
 }
 
-/* Al pasar el mouse, aclaramos un poco el rojo */
-.boton-reintentar:hover {
-    background-color: #d32f2f;
+.boton-ranking:hover {
+    background-color: #218838; /* color verde más oscuro al pasar el mouse */
 }
 
-/* Al hacer clic: sensación de “empujar” el botón */
-.boton-reintentar:active {
-    transform: translateY(4px);              /* Baja 4px */
-    box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);    /* Sombra desaparece para parecer apretado */
+.boton-ranking.disabled {
+    background-color: #ccc; /* color gris para el botón deshabilitado */
+    cursor: not-allowed; /* cambia el cursor a no permitido */
 }
 
 /* Boton para crear base de datos */

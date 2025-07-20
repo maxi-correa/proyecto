@@ -14,9 +14,21 @@
 <body>
 <div class="body-formulario">
     <main class="main-content">
-        <div class="formulario">
+        <div class="formulario formulario-menu">
             <h1>Crear Partida</h1>
-
+            
+            <!-- Mensajes de error o éxito -->
+            <?php if (session()->getFlashdata('error')): ?>
+                <div class="mensaje-error">
+                    <?= session()->getFlashdata('error') ?>
+                </div>
+            <?php endif; ?>
+            <?php if (session()->getFlashdata('exito')): ?>
+                <div class="mensaje-exito">
+                    <?= session()->getFlashdata('exito') ?>
+                </div>
+            <?php endif; ?>
+            
             <!-- Sección de cantidad de jugadores -->
             <label for="cantidadJugadores">¿Cuántos jugadores?</label>
             <div class="opciones-imagenes">
@@ -86,5 +98,6 @@
         });
     });
 </script>
+
 </body>
 </html>

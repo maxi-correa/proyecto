@@ -50,6 +50,7 @@ $routes->post('partida/jugarAJAX', 'MainController::jugarAJAX');
 
 //RUTAS PARA RESULTADOS DE PARTIDA
 $routes->get('partida/resultados/(:num)', 'PartidaController::mostrarResultados/$1');
+$routes->get('ranking', 'PartidaController::ranking');
 
 //RUTAS PARA SALIR DE PARTIDA
 $routes->get('partida/salir_espera/(:num)', 'PartidaController::salirDeEspera/$1');

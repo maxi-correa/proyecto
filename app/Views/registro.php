@@ -11,7 +11,7 @@
 <body>
     <div class="body-formulario">
         <main class="main-content">
-            <div class="formulario">
+            <div class="formulario formulario-menu">
                 <h1>Registro de Usuario</h1>
 
                 <?php if (session()->getFlashdata('error')): ?>

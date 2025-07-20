@@ -12,7 +12,7 @@
 <body>
 <div class="body-formulario">
     <main class="main-content">
-    <div class="formulario">
+    <div class="formulario formulario-menu">
         <h1>Iniciar Sesión</h1>
         <?php if (session()->getFlashdata('error')): ?>
             <div class="mensaje-error">
