@@ -54,6 +54,8 @@ $routes->get('ranking', 'PartidaController::ranking');
 
 //RUTAS PARA SALIR DE PARTIDA
 $routes->get('partida/salir_espera/(:num)', 'PartidaController::salirDeEspera/$1');
+$routes->post('partida/retirarse', 'MainController::retirarseAJAX');
+$routes->post('partida/fin', 'MainController::votarFinAJAX');
 
 //RUTAS PARA CONFIGURACIÓN DE SETUP (NO SE USARÁN)
 $routes->get('setup', 'SetupController::index');

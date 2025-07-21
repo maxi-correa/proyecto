@@ -102,7 +102,15 @@
         });
 
         // Simular animación de números y luego fijar valor
-        const ordenDescendente = [9, 6, 3, 0]; // máximos para turnos 1 a 4
+        function generarNumeroPorTurno(turnoIndex) {
+            switch (turnoIndex) {
+                case 0: return Math.floor(Math.random() * 2) + 8; // 8–9
+                case 1: return Math.floor(Math.random() * 2) + 6; // 6–7
+                case 2: return Math.floor(Math.random() * 2) + 4; // 4–5
+                case 3: return Math.floor(Math.random() * 2) + 2; // 2–3
+                default: return Math.floor(Math.random() * 2);    // 0–1 si hay más jugadores
+            }
+        }
         let count = 0;
         const interval = setInterval(() => {
             count++;
@@ -115,7 +123,8 @@
                 // Mostrar resultados definitivos
                 jugadores.sort((a, b) => a.turno - b.turno).forEach((j, idx) => {
                     const elem = document.getElementById('num-' + j.turno);
-                    elem.innerText = ordenDescendente[idx];
+                    const valor = generarNumeroPorTurno(idx);
+                    elem.innerText = valor;
                     listaTurnos.innerHTML += `<p>#${idx + 1}: ${j.nombre}</p>`;
                 });
                 setTimeout(() => {

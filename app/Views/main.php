@@ -146,6 +146,18 @@ use Config\Constants;
     color: #333;
 }
 
+.mensaje-fin-consenso {
+    background-color: white;
+    color: red;
+    border: 1px solid black;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    max-width: 100%;
+}
 /* ====== RESPONSIVE ====== */
 @media (max-width: 768px) {
     .contenedor-juego {
@@ -219,124 +231,209 @@ use Config\Constants;
 
     <!-- Columna 5: Acciones -->
     <div class="columna acciones">
-        <button id="boton-retirarse" disabled>Retirarse</button> <!-- por ahora deshabilitado -->
+        <button id="btnRetirarse" class="boton-volver">Retirarse</button><br>
+        <button id="btnTerminar" class="boton-partida">Terminar partida</button>
+        <div id="mensaje-fin-consenso" class="mensaje-fin-consenso"></div>
     </div>
-</div>
 
+    <!-- Modal Retiro -->
+    <div id="modalRetiro" class="modal">
+        <div class="formulario">
+            <h3>¿Seguro que querés abandonar la partida?</h3>
+            <button class="boton-confirmar" onclick="confirmarRetiro()">Sí, retirarme</button><br><br>
+            <button class="boton-volver" onclick="cerrarModal('modalRetiro')">Cancelar</button>
+        </div>
+    </div>
+
+</div>
     <?= view('capas/pie') ?>
 
     <script src="<?= base_url('assets/js/barra.js') ?>"></script>
     <script>
-        const idPartida = <?= $idPartida ?>;
-        const nombreJugador = "<?= esc($nombre) ?>";
+    document.addEventListener("DOMContentLoaded", function() {
+    const idPartida = <?= $idPartida ?>;
+    const nombreJugador = "<?= esc($nombre) ?>";
 
-        function obtenerEstadoPartida() {
-            fetch("<?= base_url('partida/estadoAJAX/') ?>" + idPartida)
-            .then(response => response.json())
-            .then(data => {
-                if (data.finalizada && data.redirect) {
-                    window.location.href = data.redirect;
-                    return;
-                }
-                actualizarVista(data);
-            });
-        }
+    // Estado y renderizado del juego
+    function obtenerEstadoPartida() {
+        fetch("<?= base_url('partida/estadoAJAX/') ?>" + idPartida)
+        .then(response => response.json())
+        .then(data => {
+            if (data.finalizada && data.redirect) {
+                window.location.href = data.redirect;
+                return;
+            }
+            actualizarVista(data);
+        });
+    }
 
-        function actualizarVista(data) {
-            const tableroContainer = document.getElementById('tablero-container');
-            const puntajesContainer = document.getElementById('puntajes-container');
-            const mensajeTurno = document.getElementById('mensaje-turno');
+    function actualizarVista(data) {
+    const tableroContainer = document.getElementById('tablero-container');
+    const puntajesContainer = document.getElementById('puntajes-container');
+    const mensajeTurno = document.getElementById('mensaje-turno');
 
-            // Mostrar mensaje de turno
-            if (data.jugador_turno === nombreJugador) {
-                mensajeTurno.innerText = "¡Es tu turno!";
+    mensajeTurno.innerText = data.jugador_turno === nombreJugador
+        ? "¡Es tu turno!" : "Turno de " + data.jugador_turno;
+
+    const filas = data.filas;
+    const columnas = data.columnas;
+    const tablero = data.tablero;
+
+    // 🔹 Guardar celda con foco actual (si existe)
+    const active = document.activeElement;
+    const activeFila = active?.dataset?.fila;
+    const activeColumna = active?.dataset?.columna;
+
+    tableroContainer.innerHTML = '';
+    tableroContainer.style.gridTemplateColumns = `repeat(${columnas}, 40px)`;
+    tableroContainer.className = 'tablero';
+
+    for (let i = 0; i < filas; i++) {
+        for (let j = 0; j < columnas; j++) {
+            const input = document.createElement('input');
+            input.className = 'celda';
+            input.maxLength = 1;
+            input.dataset.fila = i;
+            input.dataset.columna = j;
+
+            const letra = tablero[i][j];
+            if (letra) {
+                input.value = letra;
+                input.disabled = true;
+            } else if (data.jugador_turno !== nombreJugador) {
+                input.classList.add('no-turno');
+                input.disabled = true;
             } else {
-                mensajeTurno.innerText = "Turno de " + data.jugador_turno;
+                input.addEventListener('input', enviarLetra);
             }
 
-            // Crear tablero
-            const filas = data.filas;
-            const columnas = data.columnas;
-            const tablero = data.tablero;
-
-            tableroContainer.innerHTML = '';
-            tableroContainer.style.gridTemplateColumns = `repeat(${columnas}, 40px)`;
-            tableroContainer.className = 'tablero';
-
-            for (let i = 0; i < filas; i++) {
-                for (let j = 0; j < columnas; j++) {
-                    const input = document.createElement('input');
-                    input.className = 'celda';
-                    input.maxLength = 1;
-                    input.dataset.fila = i;
-                    input.dataset.columna = j;
-
-                    const letra = tablero[i][j];
-                    if (letra) {
-                        input.value = letra;
-                        input.disabled = true;
-                    } else if (data.jugador_turno !== nombreJugador) {
-                        input.classList.add('no-turno');
-                        input.disabled = true;
-                    } else {
-                        input.addEventListener('input', enviarLetra);
-                    }
-
-                    tableroContainer.appendChild(input);
-                }
+            // 🔹 Restaurar foco si era esta celda
+            if (String(i) === activeFila && String(j) === activeColumna) {
+                setTimeout(() => input.focus(), 10); // Evita conflicto con el redibujado
             }
 
-            // Mostrar puntajes
-            puntajesContainer.innerHTML = '<h3>Puntajes</h3>';
-            data.puntajes.forEach(j => {
-                puntajesContainer.innerHTML += `<p>${j.nombre}: ${j.puntos}</p>`;
-            });
+            tableroContainer.appendChild(input);
+        }
+    }
+
+    puntajesContainer.innerHTML = '<h3>Puntajes</h3>';
+    data.puntajes.forEach(j => {
+        puntajesContainer.innerHTML += `<p>${j.nombre}: ${j.puntos}</p>`;
+    });
+
+    const mensajeFin = document.getElementById('mensaje-fin-consenso');
+    const btnTerminar = document.getElementById('btnTerminar');
+
+    if (data.consenso) {
+        if (data.consenso.yoPropuse) {
+            mensajeFin.textContent = "Has elegido terminar la partida. Esperando respuesta de los demás jugadores. Podés seguir jugando.";
+            btnTerminar.disabled = true;
+        } else if (!data.consenso.yaVote) {
+            mensajeFin.textContent = "Un jugador quiere terminar la partida. ¿Estás de acuerdo?";
+            btnTerminar.disabled = false;
+        } else {
+            mensajeFin.textContent = "Tu decisión fue registrada. Esperando al resto.";
+            btnTerminar.disabled = true;
+        }
+    } else {
+        mensajeFin.textContent = "";
+        btnTerminar.disabled = false;
+    }
+}
+
+    function enviarLetra(e) {
+        const input = e.target;
+        const letra = input.value.toUpperCase();
+
+        if (letra !== 'A' && letra !== 'N') {
+            input.value = '';
+            alert('Solo se permiten letras A o N');
+            return;
         }
 
-        function enviarLetra(e) {
-            const input = e.target;
-            const letra = input.value.toUpperCase();
+        const fila = input.dataset.fila;
+        const columna = input.dataset.columna;
 
-            if (letra !== 'A' && letra !== 'N') { //Si no es A o N
-                input.value = ''; // Limpia el input
-                alert('Solo se permiten letras A o N'); // Muestra el mensaje
+        input.disabled = true;
+        input.style.backgroundColor = '#ccc';
+
+        fetch("<?= base_url('partida/jugarAJAX') ?>", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idPartida, fila: parseInt(fila), columna: parseInt(columna), letra })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.finalizada && res.redirect) {
+                window.location.href = res.redirect;
                 return;
             }
 
-            const fila = input.dataset.fila;
-            const columna = input.dataset.columna;
+            if (res.success) {
+                obtenerEstadoPartida();
+            } else {
+                alert(res.message);
+            }
+        });
+    }
 
-            input.disabled = true;
-            input.style.backgroundColor = '#ccc'; // Cambiar el color de fondo del input a gris
+    // BOTONES FUNCIONALES
+    document.getElementById('btnRetirarse')?.addEventListener('click', () => abrirModal('modalRetiro'));
+    document.getElementById('btnTerminar')?.addEventListener('click', () => proponerFin());
 
-            fetch("<?= base_url('partida/jugarAJAX') ?>", {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    idPartida: idPartida,
-                    fila: parseInt(fila),
-                    columna: parseInt(columna),
-                    letra: letra
-                })
-            })
-            .then(res => res.json())
-            .then(res => {
-                if (res.finalizada && res.redirect) { // Si la partida ha finalizado
-                    window.location.href = res.redirect; // Redirigir a resultados si la partida ha finalizado
-                    return;
-                }
+    // MODALES
+    function abrirModal(id) {
+        document.getElementById(id)?.classList.add('activo');
+    }
 
-                if (res.success) {
-                    obtenerEstadoPartida();
-                } else {
-                    alert(res.message);
-                }
-            });
+    function cerrarModal(id) {
+        document.getElementById(id)?.classList.remove('activo');
+    }
+
+    window.cerrarModal = cerrarModal;
+
+    // RETIRO
+    window.confirmarRetiro = function() {
+        fetch("<?= base_url('partida/retirarse') ?>", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idPartida })
+        })
+        .then(r => r.json())
+        .then(r => {
+            if (r.redirect) window.location.href = r.redirect;
+        });
+    }
+
+    // Fin consensuado
+    function proponerFin() {
+    // Enviamos el voto positivo e informamos que este jugador lo propuso
+    fetch("<?= base_url('partida/fin') ?>", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idPartida, acepto: true })
+    })
+    .then(r => r.json())
+    .then(r => {
+        const mensaje = document.getElementById('mensaje-fin-consenso');
+        const botonTerminar = document.getElementById('btnTerminar');
+
+        if (r.finalizada && r.redirect) {
+            window.location.href = r.redirect;
+        } else if (r.cancelado) {
+            mensaje.textContent = "Un jugador rechazó terminar la partida. La opción ya no está disponible.";
+            botonTerminar.disabled = true;
+        } else {
+            mensaje.textContent = "Has elegido terminar la partida. Esperando respuesta de los demás jugadores. Podés seguir jugando.";
+            botonTerminar.disabled = true;
         }
+    });
+    }
 
-        // Cargar estado inicial y actualizar cada 3 segundos
-        obtenerEstadoPartida();
-        setInterval(obtenerEstadoPartida, 3000);
-    </script>
+    // Iniciar estado y polling
+    obtenerEstadoPartida();
+    setInterval(obtenerEstadoPartida, 3000);
+});
+</script>
 </body>
 </html>

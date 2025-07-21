@@ -141,13 +141,38 @@ class MainController extends BaseController
             $estadoTablero[$casilla->fila][$casilla->columna] = $casilla->letra;
         }
 
+        // Ver si hay una propuesta de fin en curso
+        $hayVotacion = $db->query("
+            SELECT COUNT(*) AS total,
+            SUM(votoFin = 1) AS a_favor,
+            SUM(votoFin = -1) AS en_contra
+            FROM partidas_usuarios
+            WHERE idPartida = ? AND retirado = 0
+        ", [$idPartida])->getRowArray();
+
+        // Ver si este jugador ya votó
+        $miVoto = $db->query("
+            SELECT votoFin FROM partidas_usuarios
+            WHERE idPartida = ? AND idUsuario = ?
+        ", [$idPartida, $idUsuario])->getRow('votoFin');
+
+        $consenso = null;
+        if ($hayVotacion['a_favor'] > 0 && $hayVotacion['en_contra'] == 0) {
+            $consenso = [
+                'enCurso' => true,
+                'yoPropuse' => ($miVoto == 1 && $hayVotacion['a_favor'] == 1),
+                'yaVote' => ($miVoto != 0),
+            ];
+        }
+
         return $this->response->setJSON([
             'success' => true,
             'jugador_turno' => $nombreJugadorTurno,
             'puntajes' => $puntajes,
             'filas' => $partida['filas'],
             'columnas' => $partida['columnas'],
-            'tablero' => $estadoTablero
+            'tablero' => $estadoTablero,
+            'consenso' => $consenso
         ]);
     }
 
@@ -368,5 +393,100 @@ class MainController extends BaseController
         return true;
     }
 
+    public function retirarseAJAX()
+    {
+        $datos = $this->request->getJSON();
+        $idPartida = $datos->idPartida ?? null;
+        $idUsuario = session()->get('id');
+
+        // 1. marcar retirado
+        $db = \Config\Database::connect();
+        $db->query("UPDATE partidas_usuarios 
+                    SET retirado = 1 
+                    WHERE idPartida = ? AND idUsuario = ?", 
+                    [$idPartida, $idUsuario]);
+
+        // 2. ¿cuántos activos quedan?
+        $activos = $db->query("
+            SELECT COUNT(*) AS c
+            FROM partidas_usuarios
+            WHERE idPartida = ? AND retirado = 0
+        ", [$idPartida])->getRow('c');
+
+        if ($activos <= 1) {                 // queda 1 o ninguno
+            // Ganador si queda 1
+            $ganador = null;
+            if ($activos == 1) {
+                $ganador = $db->query("
+                    SELECT idUsuario FROM partidas_usuarios
+                    WHERE idPartida = ? AND retirado = 0 LIMIT 1
+                ", [$idPartida])->getRow('idUsuario');
+            }
+            // finalizamos
+            $db->query("UPDATE partidas 
+                        SET estado = 'finalizada', idGanador = ?
+                        WHERE idPartida = ?", [$ganador, $idPartida]);
+
+            return $this->response->setJSON([
+                'success'   => true,
+                'finalizada'=> true,
+                'redirect'  => base_url("partida/resultados/$idPartida")
+            ]);
+        }
+
+        // Solo sale este jugador
+        return $this->response->setJSON([
+            'success' => true,
+            'finalizada' => false,
+            'redirect' => base_url('/partida')
+        ]);
+    }
+
+    public function votarFinAJAX()
+    {
+        $datos = $this->request->getJSON();
+        $idPartida = $datos->idPartida ?? null;
+        $acepto    = $datos->acepto ?? false;
+        $idUsuario = session()->get('id');
+
+        $db = \Config\Database::connect();
+        $db->query("
+            UPDATE partidas_usuarios 
+            SET votoFin = ? 
+            WHERE idPartida = ? AND idUsuario = ?",
+            [$acepto ? 1 : -1, $idPartida, $idUsuario]);
+
+        if (!$acepto) {
+            // alguien canceló → resetear votos y deshabilitar para todos
+            $db->query("UPDATE partidas_usuarios 
+                        SET votoFin = -1 
+                        WHERE idPartida = ?", [$idPartida]);
+
+            return $this->response->setJSON(['success'=>true,'cancelado'=>true]);
+        }
+
+        // ¿Todos los activos ya votaron 1?
+        $todos = $db->query("
+            SELECT COUNT(*) AS total,
+            SUM(votoFin=1) AS a_favor
+            FROM partidas_usuarios
+            WHERE idPartida = ? AND retirado = 0
+        ", [$idPartida])->getRowArray();
+
+        if ($todos['total'] == $todos['a_favor']) {
+            // finalizar sin ganador
+            $db->query("UPDATE partidas 
+                        SET estado='finalizada', idGanador = NULL
+                        WHERE idPartida = ?", [$idPartida]);
+
+            return $this->response->setJSON([
+                'success'=>true,
+                'finalizada'=>true,
+                'redirect'=>base_url("partida/resultados/$idPartida")
+            ]);
+        }
+
+        return $this->response->setJSON(['success'=>true,'enCurso'=>true]);
+    }
 }
 ?>
