@@ -293,8 +293,13 @@ body > .contenedor-juego {
     const puntajesContainer = document.getElementById('puntajes-container');
     const mensajeTurno = document.getElementById('mensaje-turno');
 
-    mensajeTurno.innerText = data.jugador_turno === nombreJugador
-        ? "¡Es tu turno!" : "Turno de " + data.jugador_turno;
+    if (!data.jugador_turno) {
+        mensajeTurno.innerText = "Esperando siguiente turno...";
+    } else if (data.jugador_turno === nombreJugador) {
+        mensajeTurno.innerText = "¡Es tu turno!";
+    } else {
+        mensajeTurno.innerText = "Turno de " + data.jugador_turno;
+    }
 
     const filas = data.filas;
     const columnas = data.columnas;
