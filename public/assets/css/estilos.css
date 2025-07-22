@@ -5,7 +5,7 @@ html, body {
     font-family: 'Poppins', sans-serif;
     margin: 0; /* elimina márgenes por defecto */
     padding: 0; /* elimina padding por defecto */ /*padding es el espacio interno */
-    background-color: #f2f2f2;
+    background-color: #DFF6FF;
     color: #222;
     text-align: center;
     height: 100%; /* ocupa toda la altura de la ventana */
@@ -13,7 +13,7 @@ html, body {
 }
 
 .body-formulario {
-    background-color: #f2f2f2;
+    background-color: #DFF6FF;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -27,7 +27,7 @@ html, body {
     display: flex; /* para centrar el contenido */
     justify-content: center;
     align-items: center;
-    background-color: #f2f2f2; /* o el fondo que prefieras */
+    background-color: #DFF6FF;
     padding: 20px;
 }
 

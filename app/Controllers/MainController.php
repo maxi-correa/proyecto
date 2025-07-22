@@ -141,6 +141,8 @@ class MainController extends BaseController
             $estadoTablero[$casilla->fila][$casilla->columna] = $casilla->letra;
         }
 
+        $celdasANA = $this->detectarANA($estadoTablero, $partida['filas'], $partida['columnas']);
+
         // Ver si hay una propuesta de fin en curso
         $hayVotacion = $db->query("
             SELECT COUNT(*) AS total,
@@ -172,7 +174,8 @@ class MainController extends BaseController
             'filas' => $partida['filas'],
             'columnas' => $partida['columnas'],
             'tablero' => $estadoTablero,
-            'consenso' => $consenso
+            'consenso' => $consenso,
+            'celdasANA' => $celdasANA,
         ]);
     }
 
@@ -488,5 +491,33 @@ class MainController extends BaseController
 
         return $this->response->setJSON(['success'=>true,'enCurso'=>true]);
     }
+
+private function detectarANA(array $tablero, int $filas, int $cols): array
+{
+    $res = [];
+    $dirs = [[0,1],[1,0],[1,1],[-1,1]];   // → ↓ ↘ ↗
+
+    for ($f=0;$f<$filas;$f++){
+        for ($c=0;$c<$cols;$c++){
+            foreach ($dirs as [$df,$dc]){
+                $f1 = $f+$df;   $f2 = $f+2*$df;
+                $c1 = $c+$dc;   $c2 = $c+2*$dc;
+
+                if (isset($tablero[$f][$c], $tablero[$f1][$c1], $tablero[$f2][$c2]) &&
+                    strtoupper($tablero[$f][$c])   === 'A' &&
+                    strtoupper($tablero[$f1][$c1]) === 'N' &&
+                    strtoupper($tablero[$f2][$c2]) === 'A')
+                {
+                    $res[] = ['fila'=>$f,'columna'=>$c];
+                    $res[] = ['fila'=>$f1,'columna'=>$c1];
+                    $res[] = ['fila'=>$f2,'columna'=>$c2];
+                }
+            }
+        }
+    }
+    return $res;
+}
+
+
 }
 ?>

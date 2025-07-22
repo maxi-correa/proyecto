@@ -7,6 +7,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/css/estilos.css') ?>">
+        <style>
+        /* Fondo de princesa para registro */
+        html, body {
+            background-image: url('<?= base_url("assets/img/fondo_princesa.jpg") ?>');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .body-formulario {
+            background-color: rgba(242, 242, 242, 0.7); /* Decolora el fondo */
+        }
+        .main-content {
+            background-color: rgba(242, 242, 242, 0); /* Fondo transparente */
+        }
+    </style>
 </head>
 <body>
     <div class="body-formulario">

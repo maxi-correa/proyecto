@@ -1,0 +1,33 @@
+/* Fondo de princesa para login */
+html, body {
+    display: flex;
+    flex-direction: column;
+    background-image: url('<?= base_url("assets/img/fondo_princesa.jpg") ?>');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Poppins', sans-serif;
+    color: #222;
+}
+
+.body-formulario {
+    flex: 1; /* que crezca ocupando el espacio restante */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* centrado vertical */
+    align-items: center;
+    background-color: rgba(242, 242, 242, 0.7); /* Fondo transparente */
+    min-height: 100vh;
+    padding: 20px 0; /* agrega padding superior e inferior */
+    overflow-y: auto; /* permite scroll si el contenido es más alto */
+}
+
+.main-content {
+    flex: 1; /* ocupa el espacio restante */
+    display: flex; /* para centrar el contenido */
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(242, 242, 242, 0); /* fondo transparente */
+    padding: 20px;
+}

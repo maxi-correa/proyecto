@@ -11,19 +11,36 @@ use Config\Constants;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel='stylesheet' href='<?= base_url('assets/css/estilos.css') ?>'>
 <style>
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+body > .contenedor-juego {
+    flex: 1;
+}
 /* Contenedor principal en 5 columnas */
 .contenedor-juego {
     display: grid;
     grid-template-columns: 1fr 1.5fr 3fr 1.5fr 1fr;
     gap: 15px;
     margin: 20px;
-    align-items: flex-start;
+    align-items: flex-start; /* Alinea todas las columnas al mismo alto */
+    justify-items: center; /* Centra el contenido de cada columna */
+}
+
+.celda-ana {
+    border: 2px solid gold;
+    background-color: #fffde7; /* fondo amarillo claro para destacar */
 }
 
 /* ===== COL 1: Princesa ===== */
 .columna {
     padding: 10px;
     box-sizing: border-box;
+    align-items: center; /* Alinea el contenido al centro */
 }
 
 .princesa-container {
@@ -147,6 +164,7 @@ use Config\Constants;
 }
 
 .mensaje-fin-consenso {
+    display:none;
     background-color: white;
     color: red;
     border: 1px solid black;
@@ -202,8 +220,8 @@ use Config\Constants;
 </head>
 <body>
     <?= view('capas/barra') ?>
-
-    <h1>Partida #<?= esc($idPartida) ?></h1>
+    <h1>👑 <?= Constants::getNombre() ?> 👑</h1>
+    <h2>Partida #<?= esc($idPartida) ?></h2>
 
     <div class="contenedor-juego">
     <!-- Columna 1: Princesa -->
@@ -214,8 +232,10 @@ use Config\Constants;
     <!-- Columna 2: Cuadro de diálogo -->
     <div class="columna dialogo-contenedor">
         <div class="dialogo">
-            <p id="mensaje-turno">Cargando información de turno...</p>
+            <p id="mensaje-turno" style="text-align: center;">Cargando información de turno...</p>
             <p>Completa el tablero con letras A o N. ¡Forma la palabra "ANA" para sumar puntos!</p>
+            <p>"Retirarse": Te permite abandonar la partida sin poder ser el ganador.</p>
+            <p>"Terminar partida": Propones finalizar la partida. Si todos están de acuerdo, se termina.</p>
         </div>
     </div>
 
@@ -240,6 +260,7 @@ use Config\Constants;
     <div id="modalRetiro" class="modal">
         <div class="formulario">
             <h3>¿Seguro que querés abandonar la partida?</h3>
+            <h3>Si abandonas no podrás ganar ni volver a conectarte a la partida.</h3>
             <button class="boton-confirmar" onclick="confirmarRetiro()">Sí, retirarme</button><br><br>
             <button class="boton-volver" onclick="cerrarModal('modalRetiro')">Cancelar</button>
         </div>
@@ -296,6 +317,11 @@ use Config\Constants;
             input.dataset.fila = i;
             input.dataset.columna = j;
 
+            // Verifica si esta celda forma parte de "ANA"
+            if (data.celdasANA?.some(c => c.fila === i && c.columna === j)) {
+                input.classList.add('celda-ana');
+            }
+
             const letra = tablero[i][j];
             if (letra) {
                 input.value = letra;
@@ -327,16 +353,20 @@ use Config\Constants;
     if (data.consenso) {
         if (data.consenso.yoPropuse) {
             mensajeFin.textContent = "Has elegido terminar la partida. Esperando respuesta de los demás jugadores. Podés seguir jugando.";
+            mensajeFin.style.display = 'block';
             btnTerminar.disabled = true;
         } else if (!data.consenso.yaVote) {
-            mensajeFin.textContent = "Un jugador quiere terminar la partida. ¿Estás de acuerdo?";
+            mensajeFin.textContent = "Un jugador quiere terminar la partida. ¿Estás de acuerdo? Haz clic en 'Terminar partida' para votar.";
+            mensajeFin.style.display = 'block';
             btnTerminar.disabled = false;
         } else {
             mensajeFin.textContent = "Tu decisión fue registrada. Esperando al resto.";
+            mensajeFin.style.display = 'block';
             btnTerminar.disabled = true;
         }
     } else {
         mensajeFin.textContent = "";
+        mensajeFin.style.display = 'none'; // No mostrar mensaje si no hay consenso
         btnTerminar.disabled = false;
     }
 }
