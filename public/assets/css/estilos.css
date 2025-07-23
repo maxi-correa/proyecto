@@ -625,3 +625,251 @@ ul#listaTurnos {
     padding: 0;
     font-size: 18px;
 }
+
+/* ESTILOS PARA LA ASIGNACIÓN DE TURNOS */
+.numeros-container {
+    margin-top: 40px;
+    font-size: 40px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.jugador-box {
+    text-align: center;
+    width: 100px;
+}
+
+.nombre-jugador {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+#lista-turnos {
+    margin-top: 40px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* ESTILOS PARA LA VISTA MAIN */
+
+/* Contenedor principal en 5 columnas */
+.contenedor-juego {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 3fr 1.5fr 1fr;
+    gap: 15px;
+    margin: 20px;
+    align-items: flex-start; /* Alinea todas las columnas al mismo alto */
+    justify-items: center; /* Centra el contenido de cada columna */
+}
+
+.celda-ana {
+    border: 2px solid gold;
+    background-color: #fffde7; /* fondo amarillo claro para destacar */
+}
+
+/* ===== COL 1: Princesa ===== */
+.columna {
+    padding: 10px;
+    box-sizing: border-box;
+    align-items: center; /* Alinea el contenido al centro */
+}
+
+.princesa-container {
+    text-align: center;
+}
+
+.imagen-princesa {
+    width: 100%;
+    max-width: 200px;
+}
+
+/* ===== COL 2: Cuadro de diálogo ===== */
+.dialogo-contenedor {
+    position: relative;
+}
+
+.dialogo {
+    position: relative;
+    background-color: #f8f8f8;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: left;
+}
+
+/* Punta que simula que la princesa habla de lado */
+.dialogo::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: -20px;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-right-color: #f8f8f8;
+}
+
+.dialogo::before {
+    content: '';
+    position: absolute;
+    top: 19px;
+    left: -22px;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-right-color: #ccc;
+}
+
+.dialogo p {
+    margin: 5px 0;
+}
+
+.instrucciones {
+    font-size: 12px;
+    color: #666;
+}
+
+/* ===== COL 3: Tablero ===== */
+.tablero-contenedor {
+    display: flex;
+    justify-content: center;
+}
+
+.tablero {
+    display: grid;
+    gap: 5px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.celda {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.no-turno {
+    background-color: #eee;
+}
+
+/* ===== COL 4: Puntajes ===== */
+.puntajes-contenedor .puntajes {
+    position: relative;
+    border: 2px solid gold;
+    background-color: #fffde7; /* fondo amarillo claro para destacar */
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.empate {
+    position: relative;
+    background-color: #f8f8f8;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* ===== COL 5: Botones de acciones ===== */
+.botones {
+    position: relative;
+    background-color: #fcd6d6;
+    border: 2px solid rgb(255, 0, 0);
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 20px;
+}
+.acciones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.acciones button {
+    padding: 8px 12px;
+    font-size: 14px;
+    background-color: #d9534f;
+    color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.acciones button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+/* Mensaje de turno */
+#mensaje-turno {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+.mensaje-fin-consenso {
+    display:none;
+    background-color: #fcd6d6;
+    color: red;
+    border: 2px solid rgb(255, 0, 0);
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    max-width: 100%;
+}
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+    .contenedor-juego {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .tablero {
+        margin: 10px auto;
+    }
+
+    .acciones {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .dialogo::after,
+    .dialogo::before {
+        display: none;
+    }
+
+    .dialogo {
+        text-align: center;
+    }
+
+    .imagen-princesa {
+        max-width: 150px;
+    }
+
+    .celda {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
+
+    .puntajes-contenedor .puntajes {
+        text-align: center;
+    }
+}

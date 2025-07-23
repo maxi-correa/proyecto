@@ -47,7 +47,7 @@
 
         <button type='submit'>Cambiar Contraseña</button>
         <br><br>
-        <button type="button" class="boton-volver" onclick="window.location.href='<?= base_url('/') ?>'">Volver</button>
+        <button type="button" class="boton-volver" onclick="window.location.href='<?= base_url('/partida') ?>'">Volver</button>
     </form>
     </div>
     </main>

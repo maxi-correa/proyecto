@@ -6,32 +6,11 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="<?= base_url('assets/css/estilos.css') ?>">
-    <title>Ruleta de Turnos</title>
+    <title>Asignación de Turnos</title>
     <style>
         body {
             text-align: center;
             background-color: #f5f5f5;
-        }
-        .numeros-container {
-            margin-top: 40px;
-            font-size: 40px;
-            font-weight: bold;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-        }
-        .jugador-box {
-            text-align: center;
-            width: 100px;
-        }
-        .nombre-jugador {
-            font-size: 18px;
-            margin-top: 10px;
-        }
-        #lista-turnos {
-            margin-top: 40px;
-            font-size: 20px;
-            font-weight: bold;
         }
     </style>
 </head>
@@ -76,63 +55,80 @@
     </main>
     <?= view('capas/pie') ?>
 </div>
-
 <script>
-    window.onload = function () {
-        let jugadores = <?= json_encode($jugadores) ?>;
-        const numerosContainer = document.getElementById('numeros');
-        const listaTurnos = document.getElementById('lista-turnos');
+window.onload = function () {
+    let jugadores = <?= json_encode($jugadores) ?>;
+    const numerosContainer = document.getElementById('numeros');
+    const listaTurnos = document.getElementById('lista-turnos');
 
-        // Mezclar visualmente, pero respetar el campo 'turno'
-        jugadores = jugadores.sort(() => Math.random() - 0.5);
+    // Ordenar por ordenTurnos ascendente (ya asignado en el backend)
+    jugadores.sort((a, b) => a.turno - b.turno);
 
-        // Mostrar cajas con nombres y números
-        jugadores.forEach(jugador => {
-            const box = document.createElement('div');
-            box.className = 'jugador-box';
-            const numDiv = document.createElement('div');
-            numDiv.id = 'num-' + jugador.turno;
-            numDiv.innerText = '';
-            const nameDiv = document.createElement('div');
-            nameDiv.className = 'nombre-jugador';
-            nameDiv.innerText = jugador.nombre;
-            box.appendChild(numDiv);
-            box.appendChild(nameDiv);
-            numerosContainer.appendChild(box);
+    // Mostrar cajas con nombres y números (desorden visual)
+    const jugadoresVisuales = [...jugadores].sort(() => Math.random() - 0.5);
+    jugadoresVisuales.forEach(jugador => {
+        const box = document.createElement('div');
+        box.className = 'jugador-box';
+
+        const numDiv = document.createElement('div');
+        numDiv.id = 'num-' + jugador.turno;
+        numDiv.innerText = '';
+
+        const nameDiv = document.createElement('div');
+        nameDiv.className = 'nombre-jugador';
+        nameDiv.innerText = jugador.nombre;
+
+        box.appendChild(numDiv);
+        box.appendChild(nameDiv);
+        numerosContainer.appendChild(box);
+    });
+
+    // Función que genera un número según la posición en el orden de turnos
+    function generarNumeroPorTurno(turnoIndex, totalJugadores) {
+        const rangoMin = 0;
+        const rangoMax = 9;
+        const tamanoBloque = Math.floor((rangoMax - rangoMin + 1) / totalJugadores);
+
+        // Invertimos el índice: el jugador con menor ordenTurno recibe bloque más alto
+        const invertido = totalJugadores - 1 - turnoIndex;
+
+        const desde = rangoMin + invertido * tamanoBloque;
+        let hasta = desde + tamanoBloque - 1;
+
+        // Asegurar que el último rango llegue hasta el máximo
+        if (invertido === totalJugadores - 1) {
+            hasta = rangoMax;
+        }
+
+        return Math.floor(Math.random() * (hasta - desde + 1)) + desde;
+    }
+
+    // Simular animación y luego fijar valores
+    let count = 0;
+    const interval = setInterval(() => {
+        count++;
+        jugadores.forEach(j => {
+            const elem = document.getElementById('num-' + j.turno);
+            elem.innerText = Math.floor(Math.random() * 10);
         });
 
-        // Simular animación de números y luego fijar valor
-        function generarNumeroPorTurno(turnoIndex) {
-            switch (turnoIndex) {
-                case 0: return Math.floor(Math.random() * 2) + 8; // 8–9
-                case 1: return Math.floor(Math.random() * 2) + 6; // 6–7
-                case 2: return Math.floor(Math.random() * 2) + 4; // 4–5
-                case 3: return Math.floor(Math.random() * 2) + 2; // 2–3
-                default: return Math.floor(Math.random() * 2);    // 0–1 si hay más jugadores
-            }
-        }
-        let count = 0;
-        const interval = setInterval(() => {
-            count++;
-            jugadores.forEach(j => {
+        if (count > 20) {
+            clearInterval(interval);
+
+            jugadores.forEach((j, idx) => {
                 const elem = document.getElementById('num-' + j.turno);
-                elem.innerText = Math.floor(Math.random() * 10);
+                const valor = generarNumeroPorTurno(idx, jugadores.length);
+                elem.innerText = valor;
+
+                listaTurnos.innerHTML += `<p>#${idx + 1}: ${j.nombre}</p>`;
             });
-            if (count > 20) {
-                clearInterval(interval);
-                // Mostrar resultados definitivos
-                jugadores.sort((a, b) => a.turno - b.turno).forEach((j, idx) => {
-                    const elem = document.getElementById('num-' + j.turno);
-                    const valor = generarNumeroPorTurno(idx);
-                    elem.innerText = valor;
-                    listaTurnos.innerHTML += `<p>#${idx + 1}: ${j.nombre}</p>`;
-                });
-                setTimeout(() => {
-                    window.location.href = "<?= base_url('partida/jugar/') ?><?= $idPartida ?>";
-                }, 10000);
-            }
-        }, 100);
-    };
+
+            setTimeout(() => {
+                window.location.href = "<?= base_url('partida/jugar/') . $idPartida ?>";
+            }, 10000);
+        }
+    }, 100);
+};
 </script>
 </body>
 </html>

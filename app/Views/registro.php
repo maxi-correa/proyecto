@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/css/estilos.css') ?>">
         <style>
-        /* Fondo de princesa para registro */
+        /* ------------------------------------
+        FONDO DE PRINCESA PARA LOGIN Y REGISTRO
+        --------------------------------------- */
         html, body {
             background-image: url('<?= base_url("assets/img/fondo_princesa.jpg") ?>');
             background-size: cover;
@@ -82,14 +84,6 @@
         <?= view('capas/pie') ?>
     </div>
 
-<script>
-function togglePassword(fieldId, icon) {
-    const input = document.getElementById(fieldId);
-    const isPassword = input.type === "password";
-    input.type = isPassword ? "text" : "password";
-    icon.classList.toggle("fa-eye-slash");
-    icon.classList.toggle("fa-eye");
-}
-</script>
+<script src="<?= base_url('assets/js/ver_2_password.js') ?>"></script>
 </body>
 </html>

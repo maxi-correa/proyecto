@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/estilos.css') ?>">
 </head>
 <body>
+    <?= view('capas/barra', ['cambiar_contrasena' => true, 'sonido' => false, 'mostrar_logout' => true]); ?>
     <div class="body-formulario">
         <main class="main-content">
             <div class="formulario">
@@ -58,5 +59,6 @@
         </main>
         <?= view('capas/pie') ?>
     </div>
+    <script src="<?= base_url('assets/js/barra.js') ?>"></script>
 </body>
 </html>

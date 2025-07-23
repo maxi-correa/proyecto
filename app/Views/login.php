@@ -1,4 +1,5 @@
 <!--Este es el formulario de inicio de sesión-->
+
 <!DOCTYPE html>
 <html lang='es'>
 <head>
@@ -9,7 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel='stylesheet' href='<?= base_url('assets/css/estilos.css') ?>'>
     <style>
-        /* Fondo de princesa para login */
+        /* ------------------------------------
+        FONDO DE PRINCESA PARA LOGIN Y REGISTRO
+        --------------------------------------- */
         html, body {
             background-image: url('<?= base_url("assets/img/fondo_princesa.jpg") ?>');
             background-size: cover;
@@ -65,15 +68,6 @@
 
     <?= view('capas/pie') ?>
 </div>
-<script>
-function togglePassword() {
-    const input = document.getElementById("password");
-    const icon = document.querySelector(".toggle-password");
-    const isPassword = input.type === "password";
-    input.type = isPassword ? "text" : "password";
-    icon.classList.toggle("fa-eye-slash");
-    icon.classList.toggle("fa-eye");
-}
-</script>
+<script src="<?= base_url('assets/js/ver_1_password.js') ?>"></script>
 </body>
 </html>

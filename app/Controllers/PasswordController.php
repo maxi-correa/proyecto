@@ -7,7 +7,7 @@ class PasswordController extends BaseController
     {
         // Verificar si el usuario está autenticado
         if (!session()->get('logueado')) {
-            return redirect()->to('login');
+            return redirect()->to('login')->with('error', 'Debes iniciar sesión para cambiar tu contraseña.');
         }
         // Cargar la vista para cambiar la contraseña
         return view('cambiarContrasena');

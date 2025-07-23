@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/estilos.css') ?>">
 </head>
 <body>
+    <?= view('capas/barra', ['cambiar_contrasena' => false, 'sonido' => false, 'mostrar_logout' => true]); ?>
 <div class="body-formulario">
     <main class="main-content">
         <div class="formulario formulario-menu">
@@ -50,7 +51,7 @@
         <button class="boton-volver"  onclick="cerrarModal()">Cancelar</button>
     </div>
 </div>
-
+<script src="<?= base_url('assets/js/barra.js') ?>"></script>
 <script>
     let partidaSeleccionada = null;
 

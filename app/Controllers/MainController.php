@@ -435,7 +435,7 @@ class MainController extends BaseController
         $ganador = $db->query("
             SELECT idUsuario 
             FROM partidas_usuarios 
-            WHERE idPartida = ?
+            WHERE idPartida = ? AND retirado = 0
             ORDER BY puntos DESC, ordenTurnos ASC
             LIMIT 1
         ", [$idPartida])->getRow();

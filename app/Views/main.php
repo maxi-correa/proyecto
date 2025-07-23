@@ -10,216 +10,24 @@ use Config\Constants;
     <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel='stylesheet' href='<?= base_url('assets/css/estilos.css') ?>'>
-<style>
-html, body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-}
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+             /* Fondo con degradado vertical */
+            background: linear-gradient(to bottom, #81cbeed7, #cceeff);
+        }
 
-body > .contenedor-juego {
-    flex: 1;
-}
-/* Contenedor principal en 5 columnas */
-.contenedor-juego {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr 3fr 1.5fr 1fr;
-    gap: 15px;
-    margin: 20px;
-    align-items: flex-start; /* Alinea todas las columnas al mismo alto */
-    justify-items: center; /* Centra el contenido de cada columna */
-}
-
-.celda-ana {
-    border: 2px solid gold;
-    background-color: #fffde7; /* fondo amarillo claro para destacar */
-}
-
-/* ===== COL 1: Princesa ===== */
-.columna {
-    padding: 10px;
-    box-sizing: border-box;
-    align-items: center; /* Alinea el contenido al centro */
-}
-
-.princesa-container {
-    text-align: center;
-}
-
-.imagen-princesa {
-    width: 100%;
-    max-width: 200px;
-}
-
-/* ===== COL 2: Cuadro de diálogo ===== */
-.dialogo-contenedor {
-    position: relative;
-}
-
-.dialogo {
-    position: relative;
-    background-color: #f8f8f8;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 14px;
-    margin-top: 10px;
-    text-align: left;
-}
-
-/* Punta que simula que la princesa habla de lado */
-.dialogo::after {
-    content: '';
-    position: absolute;
-    top: 20px;
-    left: -20px;
-    width: 0;
-    height: 0;
-    border: 10px solid transparent;
-    border-right-color: #f8f8f8;
-}
-
-.dialogo::before {
-    content: '';
-    position: absolute;
-    top: 19px;
-    left: -22px;
-    width: 0;
-    height: 0;
-    border: 10px solid transparent;
-    border-right-color: #ccc;
-}
-
-.dialogo p {
-    margin: 5px 0;
-}
-
-.instrucciones {
-    font-size: 12px;
-    color: #666;
-}
-
-/* ===== COL 3: Tablero ===== */
-.tablero-contenedor {
-    display: flex;
-    justify-content: center;
-}
-
-.tablero {
-    display: grid;
-    gap: 5px;
-    margin-top: 20px;
-    justify-content: center;
-}
-
-.celda {
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
-    text-align: center;
-    box-sizing: border-box;
-    padding: 0;
-}
-
-.no-turno {
-    background-color: #eee;
-}
-
-/* ===== COL 4: Puntajes ===== */
-.puntajes-contenedor .puntajes {
-    margin-top: 20px;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-/* ===== COL 5: Botones de acciones ===== */
-.acciones {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.acciones button {
-    padding: 8px 12px;
-    font-size: 14px;
-    background-color: #d9534f;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.acciones button:disabled {
-    background-color: #aaa;
-    cursor: not-allowed;
-}
-
-/* Mensaje de turno */
-#mensaje-turno {
-    margin-top: 10px;
-    font-size: 18px;
-    color: #333;
-}
-
-.mensaje-fin-consenso {
-    display:none;
-    background-color: white;
-    color: red;
-    border: 1px solid black;
-    padding: 10px;
-    margin-top: 10px;
-    font-size: 14px;
-    text-align: center;
-    border-radius: 4px;
-    box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-    max-width: 100%;
-}
-/* ====== RESPONSIVE ====== */
-@media (max-width: 768px) {
-    .contenedor-juego {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-    }
-
-    .tablero {
-        margin: 10px auto;
-    }
-
-    .acciones {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .dialogo::after,
-    .dialogo::before {
-        display: none;
-    }
-
-    .dialogo {
-        text-align: center;
-    }
-
-    .imagen-princesa {
-        max-width: 150px;
-    }
-
-    .celda {
-        width: 35px;
-        height: 35px;
-        font-size: 18px;
-    }
-
-    .puntajes-contenedor .puntajes {
-        text-align: center;
-    }
-}
+        body > .contenedor-juego {
+            flex: 1;
+        }
     </style>
 </head>
 <body>
-    <?= view('capas/barra') ?>
+    <?= view('capas/barra', ['cambiar_contrasena' => false, 'sonido' => true, 'mostrar_logout' => false]); ?>
+    
     <h1>👑 <?= Constants::getNombre() ?> 👑</h1>
     <h2>Partida #<?= esc($idPartida) ?></h2>
 
@@ -232,10 +40,10 @@ body > .contenedor-juego {
     <!-- Columna 2: Cuadro de diálogo -->
     <div class="columna dialogo-contenedor">
         <div class="dialogo">
-            <p id="mensaje-turno" style="text-align: center;">Cargando información de turno...</p>
+            <p id="mensaje-turno" style="text-align: center; font-weight: bold;">Cargando información de turno...</p>
             <p>Completa el tablero con letras A o N. ¡Forma la palabra "ANA" para sumar puntos!</p>
-            <p>"Retirarse": Te permite abandonar la partida sin poder ser el ganador.</p>
-            <p>"Terminar partida": Propones finalizar la partida. Si todos están de acuerdo, se termina.</p>
+            <p><b>"Retirarse"</b>: Te permite abandonar la partida sin poder ser el ganador.</p>
+            <p><b>"Terminar partida"</b>: Propones finalizar la partida o votas para terminarla. Si todos están de acuerdo, se termina.</p>
         </div>
     </div>
 
@@ -247,12 +55,17 @@ body > .contenedor-juego {
     <!-- Columna 4: Puntajes -->
     <div class="columna puntajes-contenedor">
         <div class="puntajes" id="puntajes-container"></div>
+        <div class="empate">
+            <p>En caso de <b>empate</b> en puntos, gana el jugador con <b>menor número de turno asignado</b>.</p>
+        </div>
     </div>
 
     <!-- Columna 5: Acciones -->
     <div class="columna acciones">
-        <button id="btnRetirarse" class="boton-volver">Retirarse</button><br>
-        <button id="btnTerminar" class="boton-partida">Terminar partida</button>
+        <div class="botones">
+        <button id="btnRetirarse" class="boton-volver">Retirarse</button><br><br>
+        <button id="btnTerminar" class="boton-volver">Terminar partida</button>
+        </div>
         <div id="mensaje-fin-consenso" class="mensaje-fin-consenso"></div>
     </div>
 
@@ -265,7 +78,6 @@ body > .contenedor-juego {
             <button class="boton-volver" onclick="cerrarModal('modalRetiro')">Cancelar</button>
         </div>
     </div>
-
 </div>
     <?= view('capas/pie') ?>
 
@@ -357,20 +169,20 @@ body > .contenedor-juego {
 
     if (data.consenso) {
         if (data.consenso.yoPropuse) {
-            mensajeFin.textContent = "Has elegido terminar la partida. Esperando respuesta de los demás jugadores. Podés seguir jugando.";
+            mensajeFin.innerHTML = "Has elegido <b>terminar la partida</b>. Esperando respuesta de los demás jugadores. Podés seguir jugando.";
             mensajeFin.style.display = 'block';
             btnTerminar.disabled = true;
         } else if (!data.consenso.yaVote) {
-            mensajeFin.textContent = "Un jugador quiere terminar la partida. ¿Estás de acuerdo? Haz clic en 'Terminar partida' para votar.";
+            mensajeFin.innerHTML = "Un jugador quiere <b>terminar la partida</b>. ¿Estás de acuerdo? Haz clic en <b>'Terminar partida'</b> para votar.";
             mensajeFin.style.display = 'block';
             btnTerminar.disabled = false;
         } else {
-            mensajeFin.textContent = "Tu decisión fue registrada. Esperando al resto.";
+            mensajeFin.innerHTML = "Tu decisión fue registrada. Esperando al resto. Puedes seguir jugando.";
             mensajeFin.style.display = 'block';
             btnTerminar.disabled = true;
         }
     } else {
-        mensajeFin.textContent = "";
+        mensajeFin.innerHTML = "";
         mensajeFin.style.display = 'none'; // No mostrar mensaje si no hay consenso
         btnTerminar.disabled = false;
     }

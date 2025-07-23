@@ -1,10 +1,13 @@
 <!-- app/Views/capas/barra.php -->
+<?php $cambiar_contrasena = $cambiar_contrasena ?? true; ?>
+<?php $sonido = $sonido ?? true; ?>
+<?php $mostrar_logout = $mostrar_logout ?? true; ?>
 
 <!-- BARRA DE NAVEGACIÓN -->
 
 <header class="navbar">
         <div class="usuario-info">
-            Bienvenido, <?= esc($nombre)?>
+            Bienvenid@, <?= esc($nombre)?>
         </div>
         <div class="audio-control" id="musica-control" style="display: none;">
             <span class="usuario-info">Música de Fondo:</span>
@@ -23,8 +26,12 @@
             <img src="<?= base_url('assets/img/menu.png') ?>" alt="menu" class="imagen-menu" onclick="menu_desplegable()">
         </div>
         <div id="menu" class="menu-desplegable" style="display: none;">
+        
+            <?php if ($cambiar_contrasena): ?>
             <a href="<?= base_url('cambiar_contrasena') ?>">Cambiar Contraseña</a>
+            <?php endif; ?>
 
+            <?php if($sonido): ?>
             <div class="submenu-contenedor">
                 <a href="#" onclick="habilitar_sonido(event)">Sonido</a>
                 <div id="subMenuSonido" class="submenu-sonido oculto">
@@ -36,9 +43,12 @@
                     </a>
                 </div>
             </div>
-
+            <?php endif; ?>
+            
+            <?php if($mostrar_logout): ?>
             <a href="<?= base_url('logout') ?>">
                 <img src="<?= base_url('assets/img/cerrar_sesion.png') ?>" alt="Cerrar Sesión" class="imagen-logout"> Cerrar Sesión
             </a>
+            <?php endif; ?>
         </div>
     </header>

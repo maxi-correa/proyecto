@@ -1,4 +1,7 @@
 <!-- Vista de resultados de partida -->
+<?php
+use Config\Constants;
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -11,9 +14,9 @@
 
     <main class="main-content">
 
-        <div class="formulario">
-
-            <h1 class="h1-exito">🎉 Resultados - Partida #<?= esc($idPartida) ?> 🎉</h1>
+        <div class="formulario formulario-menu">
+            <h1>👑 <?= Constants::getNombre() ?> 👑</h1>
+            <h2>🎉 Resultados - Partida #<?= esc($idPartida) ?> 🎉</h2>
 
             <table class="tabla-exito">
                 <thead>

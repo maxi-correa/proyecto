@@ -7,12 +7,25 @@ class PartidaController extends BaseController
 {
     public function eleccionPartida()
     {
-        return view('partida');
+        if (!session()->get('id')) {
+            return redirect()->to('/login')->with('error', 'Debes iniciar sesión para acceder a esta página.');
+        }
+        $nombre = session()->get('nombre');
+        return view('partida', [
+            'nombre' => $nombre,
+            'sonido' => false // No se reproduce sonido en esta vista
+        ]);
     }
 
     public function vistaCrearPartida()
     {
-        return view('vistaCrearPartida');
+        if (!session()->get('logueado')) {
+            return redirect()->to('/login')->with('error', 'Debes iniciar sesión para crear una partida.');
+        }
+        $nombre = session()->get('nombre');
+        return view('vistaCrearPartida', [
+            'nombre' => $nombre
+        ]);
     }
 
     public function crearPartida()
@@ -81,6 +94,11 @@ class PartidaController extends BaseController
 
     public function listarPartidas()
     {
+        if (!session()->get('logueado')) {
+            return redirect()->to('/login')->with('error', 'Debes iniciar sesión para ver las partidas.');
+        }
+        $nombre = session()->get('nombre');
+
         $partidaModel = new \App\Models\PartidaModel();
         
         // Obtenemos todas las partidas que están esperando jugadores y hacemos join con la tabla tableros
@@ -98,8 +116,8 @@ class PartidaController extends BaseController
             ->where('idPartida', $partida['idPartida'])
             ->countAllResults();
         }
-        
-        return view('listarPartidas', ['partidas' => $partidas]);
+
+        return view('listarPartidas', ['partidas' => $partidas, 'nombre' => $nombre]);
     }
 
     public function estadoPartida($idPartida)
@@ -363,6 +381,11 @@ class PartidaController extends BaseController
 
     public function ranking()
     {
+        if (!session()->get('logueado')) {
+            return redirect()->to('/login')->with('error', 'Debes iniciar sesión para ver el ranking.');
+        }
+
+        $nombre = session()->get('nombre');
         $db = \Config\Database::connect();
 
         // Obtener los tamaños únicos de tableros usados en partidas
@@ -394,6 +417,9 @@ class PartidaController extends BaseController
             $rankingPorTablero["{$filas}x{$columnas}"] = $query->getResultArray();
         }
 
-        return view('ranking', ['rankingPorTablero' => $rankingPorTablero]);
+        return view('ranking', [
+            'rankingPorTablero' => $rankingPorTablero,
+            'nombre' => $nombre
+        ]);
     }
 }
