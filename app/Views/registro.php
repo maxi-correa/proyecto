@@ -47,7 +47,7 @@
                 <form action="<?= base_url('registro/procesar') ?>" method="post">
 
                     <label for="nombre">Nombre de Usuario*:</label>
-                    <input type="text" name="nombre" id="nombre" value="<?= old('nombre') ?>" maxlength="20" placeholder="4 caracteres mín., sin espacios ni números.">
+                    <input type="text" name="nombre" id="nombre" value="<?= old('nombre') ?>" maxlength="20" placeholder="Mín. 4 caracteres, sin espacios.">
 
                     <label for="email">Correo electrónico*:</label>
                     <input type="email" name="email" id="email" value="<?= old('email') ?>" placeholder="ejemplo@gmail.com">

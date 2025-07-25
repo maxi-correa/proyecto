@@ -50,6 +50,5 @@ use Config\Constants;
     </main>
 
 <?= view('capas/pie') ?>
-
 </body>
 </html>

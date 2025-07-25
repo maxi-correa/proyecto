@@ -62,7 +62,7 @@ class AuthController extends BaseController
             return redirect()->to('/login')->with('error', 'El nombre de usuario y la contraseña son obligatorios.');
         }
         // Validar que el nombre de usuario tenga un formato correcto
-        if (!preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑ_]{4,}$/', $nombre)) {
+        if (!preg_match('/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ_]{4,}$/', $nombre)) {
             return redirect()->to('/login')->with('error', 'El nombre de usuario no es válido.');
         }
         
@@ -123,9 +123,9 @@ class AuthController extends BaseController
             return redirect()->to('/registro')->withInput()->with('error', 'Todos los campos son obligatorios.');
         }
 
-        // Validar que el nombre solo contenga letras, guiones bajos sin espacios y un mínimo de 4 caracteres
-        if (!preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑ_]{4,}$/', $datos['nombreUsuario'])) {
-            return redirect()->to('/registro')->withInput()->with('error', 'El nombre solo puede contener letras y guiones bajos sin espacios y debe tener al menos 4 caracteres.');
+        // Validar que el nombre contenga letras y números, guiones bajos sin espacios y un mínimo de 4 caracteres
+        if (!preg_match('/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ_]{4,}$/', $datos['nombreUsuario'])) {
+            return redirect()->to('/registro')->withInput()->with('error', 'El nombre solo puede contener letras, números y guiones bajos sin espacios y debe tener al menos 4 caracteres.');
         }
         
         //Validar que el nombre de usuario no se repita

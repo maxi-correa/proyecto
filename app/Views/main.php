@@ -56,7 +56,7 @@ use Config\Constants;
     <div class="columna puntajes-contenedor">
         <div class="puntajes" id="puntajes-container"></div>
         <div class="empate">
-            <p>En caso de <b>empate</b> en puntos, gana el jugador con <b>menor número de turno asignado</b>.</p>
+            <p>En caso de <b>empate</b> en puntos, gana el participante en juego <b>primero en orden de turnos</b>.</p>
         </div>
     </div>
 

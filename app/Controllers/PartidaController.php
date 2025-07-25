@@ -341,6 +341,10 @@ class PartidaController extends BaseController
 
     public function mostrarResultados($idPartida)
     {
+        if (!session()->get('logueado')) {
+            return redirect()->to('/login')->with('error', 'Debes iniciar sesión para ver los resultados de la partida.');
+        }
+        // Validamos que el ID de la partida sea válido
         $partidaModel = new \App\Models\PartidaModel();
         $partidaUsuarioModel = new \App\Models\PartidaUsuarioModel();
         $usuarioModel = new \App\Models\UsuarioModel();

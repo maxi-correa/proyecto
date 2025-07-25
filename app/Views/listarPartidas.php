@@ -3,7 +3,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Unirse a una partida</title>
+    <title>Unirse a partida</title>
     <link rel="stylesheet" href="<?= base_url('assets/css/estilos.css') ?>">
 </head>
 <body>
