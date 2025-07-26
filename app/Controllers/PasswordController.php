@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 class PasswordController extends BaseController
 {
+    // Devuelve la vista para cambiar la contraseña
     public function cambiarContrasena()
     {
         // Verificar si el usuario está autenticado
@@ -13,6 +14,7 @@ class PasswordController extends BaseController
         return view('cambiarContrasena');
     }
 
+    // Procesa el cambio de contraseña
     public function procesarCambiarContrasena()
     {
         // Verificar si el usuario está autenticado

@@ -32,14 +32,15 @@ class AuthController extends BaseController
         // Verificar si el usuario ya está autenticado
         if (session()->get('logueado')) {
             // Redirigir a la página principal si ya está autenticado
-            return redirect()->to('/');
+            return redirect()->to('/partida');
         }
     }
 
     /** -----------------------------------------------
      * FUNCIONES QUE PERMITEN EL ACCESO A LA APLICACIÓN 
      * -----------------------------------------------*/
-
+    
+    //Se muestra la vista de inicio de sesión
     public function login()
     {
         $this->verificar_logueo(); // Verificar si el usuario ya está logueado
@@ -47,7 +48,8 @@ class AuthController extends BaseController
         // Cargar la vista de inicio de sesión
         return view('login');
     }
-
+    
+    //Se procesa el incio de sesión
     public function procesarLogin()
     {
         $this->verificar_logueo(); // Verificar si el usuario ya está logueado
@@ -88,7 +90,8 @@ class AuthController extends BaseController
             return redirect()->to('/login')->withInput()->with('error', 'Credenciales incorrectas.');
         }
     }
-
+    
+    // Se muestra la vista de registro
     public function registro()
     {
         $this->verificar_logueo(); // Verificar si el usuario ya está logueado
@@ -99,7 +102,8 @@ class AuthController extends BaseController
         // Cargar la vista de registro
         return view('registro', $data);
     }
-
+    
+    // Se procesa el registro de un nuevo usuario
     public function procesarRegistro()
     {
         $this->verificar_logueo(); // Verificar si el usuario ya está logueado
@@ -173,7 +177,7 @@ class AuthController extends BaseController
         }
     }
 
-
+    // Se devuelve la vista de recuperar contraseña
     public function recuperarContrasena()
     {
         $this->verificar_logueo(); // Verificar si el usuario ya está logueado
@@ -187,6 +191,7 @@ class AuthController extends BaseController
         return view('recuperarContrasena');
     }
 
+    // Se procesa la recuperación de contraseña
     public function procesarRecuperarContrasena()
     {
         // Procesar el formulario de recuperación de contraseña

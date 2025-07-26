@@ -6,21 +6,13 @@ use App\Controllers\BaseController;
 
 class MainController extends BaseController
 {
+    // No está pensado dentro de el proyecto actual, pero se redirige al login por si acaso.
     public function index()
     {
-        // Verificar si el usuario está autenticado
-        if (session()->get('logueado')) {
-            // Cargar la vista principal del usuario
-            return view('main', [
-                'nombre' => session()->get('nombre'),
-                'apellido' => session()->get('apellido'),
-            ]);
-        } else {
-            // Redirigir al inicio de sesión si no está autenticado
-            return redirect()->to('/login')->with('error', 'Por favor, inicie sesión para continuar.');
-        }
+        return redirect()->to('/login');
     }
 
+    // Cierra la sesión del usuario, desde los lugares donde se pueda acceder a esta función.
     public function logout()
     {
         // Cerrar sesión
@@ -28,6 +20,7 @@ class MainController extends BaseController
         return redirect()->to('/login')->with('exito', 'Has cerrado sesión exitosamente.');
     }
 
+    // Muestra la vista del juego principal
     public function jugar($idPartida)
     {
         // Verificar si el usuario está autenticado
@@ -73,161 +66,137 @@ class MainController extends BaseController
         ]);
     }
 
+    // Devuelve el estado de la partida en formato JSON para AJAX
     public function estadoAJAX($idPartida)
-{
-    $session = session();
-    $idUsuario = $session->get('id');
-
-    $partidaModel = new \App\Models\PartidaModel();
-    $partidaUsuarioModel = new \App\Models\PartidaUsuarioModel();
-    $usuarioModel = new \App\Models\UsuarioModel();
-
-    $partida = $partidaModel
-        ->select('partidas.*, tableros.filas, tableros.columnas')
-        ->join('tableros', 'partidas.idTablero = tableros.idTablero')
-        ->where('idPartida', $idPartida)
-        ->first();
-
-    if (!$partida) {
-        return $this->response->setJSON(['success' => false, 'message' => 'Partida no encontrada']);
-    }
-
-    if ($partida['estado'] === 'finalizada') {
-        return $this->response->setJSON([
-            'success' => true,
-            'finalizada' => true,
-            'redirect' => base_url("partida/resultados/$idPartida")
-        ]);
-    }
-
-    $db = \Config\Database::connect();
-
-    // Intentamos obtener el jugador del turno actual (que no esté retirado)
-    $jugadorTurno = $db->query("
-        SELECT u.nombreUsuario
-        FROM partidas_usuarios pu
-        JOIN usuarios u ON pu.idUsuario = u.id
-        WHERE pu.idPartida = ? AND pu.ordenTurnos = ? AND pu.retirado = 0
-        LIMIT 1
-    ", [$idPartida, $partida['turnoActual']])->getRow();
-
-    // Si no hay jugador activo en ese turno, lo saltamos
-    if (!$jugadorTurno) {
-        $siguiente = $this->obtenerSiguienteJugadorActivo($idPartida, $partida['turnoActual']);
-        if ($siguiente !== null) {
-            $partidaModel->update($idPartida, ['turnoActual' => $siguiente]);
-
-            $jugadorTurno = $db->query("
-                SELECT u.nombreUsuario
-                FROM partidas_usuarios pu
-                JOIN usuarios u ON pu.idUsuario = u.id
-                WHERE pu.idPartida = ? AND pu.ordenTurnos = ?
-                LIMIT 1
-            ", [$idPartida, $siguiente])->getRow();
-        } else {
-        return $this->response->setJSON([
-            'success' => false,
-            'message' => 'No hay jugadores activos disponibles.'
-            ]);
-        }
-    }
-
-    if (isset($jugadorTurno) && isset($jugadorTurno->nombreUsuario)) {
-        $nombreJugadorTurno = $jugadorTurno->nombreUsuario;
-    } else {
-        $nombreJugadorTurno = '(sin jugador activo)';
-    }
-
-    // Puntajes
-    $jugadores = $partidaUsuarioModel->where('idPartida', $idPartida)->findAll();
-    $puntajes = [];
-    foreach ($jugadores as $jugador) {
-        $usuario = $usuarioModel->find($jugador['idUsuario']);
-        $puntajes[] = [
-            'nombre' => $usuario['nombreUsuario'],
-            'puntos' => $jugador['puntos']
-        ];
-    }
-
-    // Estado del tablero
-    $query = $db->table('tablero_estado')->where('idPartida', $idPartida)->get();
-    $estadoTablero = [];
-    for ($i = 0; $i < $partida['filas']; $i++) {
-        $estadoTablero[$i] = array_fill(0, $partida['columnas'], '');
-    }
-    foreach ($query->getResult() as $casilla) {
-        $estadoTablero[$casilla->fila][$casilla->columna] = $casilla->letra;
-    }
-
-    $celdasANA = $this->detectarANA($estadoTablero, $partida['filas'], $partida['columnas']);
-
-    // Votación de fin
-    $hayVotacion = $db->query("
-        SELECT COUNT(*) AS total,
-        SUM(votoFin = 1) AS a_favor,
-        SUM(votoFin = -1) AS en_contra
-        FROM partidas_usuarios
-        WHERE idPartida = ? AND retirado = 0
-    ", [$idPartida])->getRowArray();
-
-    $miVoto = $db->query("
-        SELECT votoFin FROM partidas_usuarios
-        WHERE idPartida = ? AND idUsuario = ?
-    ", [$idPartida, $idUsuario])->getRow('votoFin');
-
-    $consenso = null;
-    if ($hayVotacion['a_favor'] > 0 && $hayVotacion['en_contra'] == 0) {
-        $consenso = [
-            'enCurso' => true,
-            'yoPropuse' => ($miVoto == 1 && $hayVotacion['a_favor'] == 1),
-            'yaVote' => ($miVoto != 0),
-        ];
-    }
-
-    return $this->response->setJSON([
-        'success' => true,
-        'jugador_turno' => $nombreJugadorTurno,
-        'puntajes' => $puntajes,
-        'filas' => $partida['filas'],
-        'columnas' => $partida['columnas'],
-        'tablero' => $estadoTablero,
-        'consenso' => $consenso,
-        'celdasANA' => $celdasANA,
-    ]);
-}
-
-    private function obtenerSiguienteJugadorActivo($idPartida, $turnoActual)
-{
-    $db = \Config\Database::connect();
-
-    // Obtener cantidad de jugadores
-    $cantidad = $db->table('partidas')
-        ->select('cantidad_jugadores')
-        ->where('idPartida', $idPartida)
-        ->get()
-        ->getRow('cantidad_jugadores');
-
-    $intentos = 0;
-    do {
-        $turnoActual = $turnoActual % $cantidad + 1;
-
-        $jugador = $db->query("
-            SELECT * FROM partidas_usuarios 
-            WHERE idPartida = ? AND ordenTurnos = ? AND retirado = 0
-            LIMIT 1
-        ", [$idPartida, $turnoActual])->getRow();
-
-        $intentos++;
-    } while (!$jugador && $intentos <= $cantidad);
-
-    return $jugador ? $turnoActual : null;
-}
-
-    public function jugarAJAX()
     {
         $session = session();
         $idUsuario = $session->get('id');
 
+        $partidaModel = new \App\Models\PartidaModel();
+        $partidaUsuarioModel = new \App\Models\PartidaUsuarioModel();
+        $usuarioModel = new \App\Models\UsuarioModel();
+
+        $partida = $partidaModel
+            ->select('partidas.*, tableros.filas, tableros.columnas')
+            ->join('tableros', 'partidas.idTablero = tableros.idTablero')
+            ->where('idPartida', $idPartida)
+            ->first();
+
+        if (!$partida) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Partida no encontrada']);
+        }
+
+        if ($partida['estado'] === 'finalizada') {
+            return $this->response->setJSON([
+                'success' => true,
+                'finalizada' => true,
+                'redirect' => base_url("partida/resultados/$idPartida")
+            ]);
+        }
+
+        $db = \Config\Database::connect();
+
+        // Intentamos obtener el jugador del turno actual (que no esté retirado)
+        $jugadorTurno = $db->query("
+            SELECT u.nombreUsuario
+            FROM partidas_usuarios pu
+            JOIN usuarios u ON pu.idUsuario = u.id
+            WHERE pu.idPartida = ? AND pu.ordenTurnos = ? AND pu.retirado = 0
+            LIMIT 1
+        ", [$idPartida, $partida['turnoActual']])->getRow();
+
+        // Si no hay jugador activo en ese turno, lo saltamos
+        if (!$jugadorTurno) {
+            $siguiente = $this->obtenerSiguienteJugadorActivo($idPartida, $partida['turnoActual']);
+            if ($siguiente !== null) {
+                $partidaModel->update($idPartida, ['turnoActual' => $siguiente]);
+
+                $jugadorTurno = $db->query("
+                    SELECT u.nombreUsuario
+                    FROM partidas_usuarios pu
+                    JOIN usuarios u ON pu.idUsuario = u.id
+                    WHERE pu.idPartida = ? AND pu.ordenTurnos = ?
+                    LIMIT 1
+                ", [$idPartida, $siguiente])->getRow();
+            } else {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'No hay jugadores activos disponibles.'
+                ]);
+            }
+        }
+
+        // Nombre del jugador del turno actual
+        if (isset($jugadorTurno) && isset($jugadorTurno->nombreUsuario)) {
+            $nombreJugadorTurno = $jugadorTurno->nombreUsuario;
+        } else {
+            $nombreJugadorTurno = '(sin jugador activo)'; // No debería suceder, pero por si acaso
+        }
+
+        // Puntajes
+        $jugadores = $partidaUsuarioModel->where('idPartida', $idPartida)->findAll();
+        $puntajes = [];
+        foreach ($jugadores as $jugador) {
+            $usuario = $usuarioModel->find($jugador['idUsuario']);
+            $puntajes[] = [
+                'nombre' => $usuario['nombreUsuario'],
+                'puntos' => $jugador['puntos']
+            ];
+        }
+
+        // Estado del tablero
+        $query = $db->table('tablero_estado')->where('idPartida', $idPartida)->get();
+        $estadoTablero = [];
+        for ($i = 0; $i < $partida['filas']; $i++) {
+            $estadoTablero[$i] = array_fill(0, $partida['columnas'], '');
+        }
+        foreach ($query->getResult() as $casilla) {
+            $estadoTablero[$casilla->fila][$casilla->columna] = $casilla->letra;
+        }
+
+        $celdasANA = $this->detectarANA($estadoTablero, $partida['filas'], $partida['columnas']);
+
+        // Votación de fin
+        $hayVotacion = $db->query("
+            SELECT COUNT(*) AS total,
+            SUM(votoFin = 1) AS a_favor,
+            SUM(votoFin = -1) AS en_contra
+            FROM partidas_usuarios
+            WHERE idPartida = ? AND retirado = 0
+        ", [$idPartida])->getRowArray();
+
+        $miVoto = $db->query("
+            SELECT votoFin FROM partidas_usuarios
+            WHERE idPartida = ? AND idUsuario = ?
+        ", [$idPartida, $idUsuario])->getRow('votoFin');
+
+        $consenso = null;
+        if ($hayVotacion['a_favor'] > 0 && $hayVotacion['en_contra'] == 0) {
+            $consenso = [
+                'enCurso' => true,
+                'yoPropuse' => ($miVoto == 1 && $hayVotacion['a_favor'] == 1),
+                'yaVote' => ($miVoto != 0),
+            ];
+        }
+
+        return $this->response->setJSON([
+            'success' => true,
+            'jugador_turno' => $nombreJugadorTurno,
+            'puntajes' => $puntajes,
+            'filas' => $partida['filas'],
+            'columnas' => $partida['columnas'],
+            'tablero' => $estadoTablero,
+            'consenso' => $consenso,
+            'celdasANA' => $celdasANA,
+        ]);
+    }
+
+    // Procesa la jugada del jugador a través de AJAX
+    public function jugarAJAX()
+    {
+        $session = session();
+        $idUsuario = $session->get('id');
+        
         $data = json_decode($this->request->getBody(), true);
 
         $idPartida = (int)($data['idPartida'] ?? 0);
@@ -288,7 +257,7 @@ class MainController extends BaseController
                 "UPDATE partidas_usuarios SET puntos = ? WHERE idPartida = ? AND idUsuario = ?",
                 [$nuevoPuntaje, $idPartida, $idUsuario]
             );
-
+            
             // Verificamos si terminó la partida
             if ($this->verificarFinDeJuego($idPartida)) {
                 return $this->response->setJSON([
@@ -307,27 +276,27 @@ class MainController extends BaseController
             // Pasar el turno al siguiente
             $turnoActual = $partida['turnoActual'];
             $intentos = 0;
-
+            
             do {
                 $turnoActual = $turnoActual % $partida['cantidad_jugadores'] + 1;
-
+                
                 $siguiente = $db->query("
-                    SELECT * FROM partidas_usuarios 
-                    WHERE idPartida = ? AND ordenTurnos = ? AND retirado = 0
-                    LIMIT 1
+                SELECT * FROM partidas_usuarios 
+                WHERE idPartida = ? AND ordenTurnos = ? AND retirado = 0
+                LIMIT 1
                 ", [$idPartida, $turnoActual])->getRow();
-
+                
                 $intentos++;
             } while (!$siguiente && $intentos <= $partida['cantidad_jugadores']);
-
+            
             if (!$siguiente) {
                 // por seguridad, no se encontró siguiente jugador activo
                 return $this->response->setJSON(['success' => false, 'message' => 'No hay jugadores activos']);
             }
-
+            
             // Actualizar turno
             $db->query("UPDATE partidas SET turnoActual = ? WHERE idPartida = ?", [$turnoActual, $idPartida]);
-
+            
             // Verificamos si terminó la partida
             if ($this->verificarFinDeJuego($idPartida)) {
                 return $this->response->setJSON([
@@ -336,7 +305,7 @@ class MainController extends BaseController
                     'redirect' => base_url("partida/resultados/$idPartida")
                 ]);
             }
-
+            
             return $this->response->setJSON([
                 'success' => true,
                 'message' => "No formaste ANA. Turno para el siguiente jugador.",
@@ -344,8 +313,175 @@ class MainController extends BaseController
             ]);
         }
     }
+    
+    // Procesa la acción de retirarse de la partida a través de AJAX
+    public function retirarseAJAX()
+    {
+        $datos = $this->request->getJSON();
+        $idPartida = $datos->idPartida ?? null;
+        $idUsuario = session()->get('id');
 
-    private function verificarANA($idPartida, $fila, $columna) //Es private porque solo se usa internamente
+        // 1. marcar retirado
+        $db = \Config\Database::connect();
+        $db->query("UPDATE partidas_usuarios 
+                    SET retirado = 1 
+                    WHERE idPartida = ? AND idUsuario = ?", 
+                    [$idPartida, $idUsuario]);
+
+         /* 1.5  ¿era su turno?  ->  pasar turno al siguiente activo */
+        $partida = $db->table('partidas')
+                        ->where('idPartida', $idPartida)
+                        ->get()->getRow();
+
+        $yo = $db->table('partidas_usuarios')
+                    ->where([
+                        'idPartida'   => $idPartida,
+                        'idUsuario'   => $idUsuario
+                    ])->get()->getRow();
+
+        if ($partida && $yo && $partida->turnoActual == $yo->ordenTurnos) {
+            $turnoActual = $partida->turnoActual;
+            $intentos    = 0;
+
+            do {
+                $turnoActual = $turnoActual % $partida->cantidad_jugadores + 1;
+
+                $siguiente = $db->query(
+                    "SELECT 1
+                        FROM partidas_usuarios
+                        WHERE idPartida = ? AND ordenTurnos = ? AND retirado = 0
+                        LIMIT 1",
+                    [$idPartida, $turnoActual]
+                )->getRow();
+
+                $intentos++;
+            } while (!$siguiente && $intentos <= $partida->cantidad_jugadores);
+
+            if ($siguiente) {
+                $db->table('partidas')
+                    ->where('idPartida', $idPartida)
+                    ->update(['turnoActual' => $turnoActual]);
+            }
+        }
+        // 2. ¿cuántos activos quedan?
+        $activos = $db->query("
+            SELECT COUNT(*) AS c
+            FROM partidas_usuarios
+            WHERE idPartida = ? AND retirado = 0
+        ", [$idPartida])->getRow('c');
+
+        if ($activos <= 1) {                 // queda 1 o ninguno
+            // Ganador si queda 1
+            $ganador = null;
+            if ($activos == 1) {
+                $ganador = $db->query("
+                    SELECT idUsuario FROM partidas_usuarios
+                    WHERE idPartida = ? AND retirado = 0 LIMIT 1
+                ", [$idPartida])->getRow('idUsuario');
+            }
+            // finalizamos
+            $db->query("UPDATE partidas 
+                        SET estado = 'finalizada', idGanador = ?
+                        WHERE idPartida = ?", [$ganador, $idPartida]);
+
+            return $this->response->setJSON([
+                'success'   => true,
+                'finalizada'=> true,
+                'redirect'  => base_url("partida/resultados/$idPartida")
+            ]);
+        }
+
+        // Solo sale este jugador
+        return $this->response->setJSON([
+            'success' => true,
+            'finalizada' => false,
+            'redirect' => base_url('/partida')
+        ]);
+    }
+
+    // Procesa la votación de finalización de partida a través de AJAX
+    public function votarFinAJAX()
+    {
+        $datos = $this->request->getJSON();
+        $idPartida = $datos->idPartida ?? null;
+        $acepto    = $datos->acepto ?? false;
+        $idUsuario = session()->get('id');
+
+        $db = \Config\Database::connect();
+        $db->query("
+            UPDATE partidas_usuarios 
+            SET votoFin = ? 
+            WHERE idPartida = ? AND idUsuario = ?",
+            [$acepto ? 1 : -1, $idPartida, $idUsuario]);
+
+        if (!$acepto) {
+            // alguien canceló → resetear votos y deshabilitar para todos
+            $db->query("UPDATE partidas_usuarios 
+                        SET votoFin = -1 
+                        WHERE idPartida = ?", [$idPartida]);
+
+            return $this->response->setJSON(['success'=>true,'cancelado'=>true]);
+        }
+
+        // ¿Todos los activos ya votaron 1?
+        $todos = $db->query("
+            SELECT COUNT(*) AS total,
+            SUM(votoFin=1) AS a_favor
+            FROM partidas_usuarios
+            WHERE idPartida = ? AND retirado = 0
+        ", [$idPartida])->getRowArray();
+
+        if ($todos['total'] == $todos['a_favor']) {
+            // finalizar sin ganador
+            $db->query("UPDATE partidas 
+                        SET estado='finalizada', idGanador = NULL
+                        WHERE idPartida = ?", [$idPartida]);
+
+            return $this->response->setJSON([
+                'success'=>true,
+                'finalizada'=>true,
+                'redirect'=>base_url("partida/resultados/$idPartida")
+            ]);
+        }
+
+        return $this->response->setJSON(['success'=>true,'enCurso'=>true]);
+    }
+
+/*------------------------------------
+    FUNCIONES PRIVADAS DE AYUDA
+------------------------------------*/
+
+    // Ayuda a la funcion estadoAJAX() para conocer el siguiente jugador activo (útil cuando se retira un jugador).
+    private function obtenerSiguienteJugadorActivo($idPartida, $turnoActual)
+    {
+        $db = \Config\Database::connect();
+
+        // Obtener cantidad de jugadores
+        $cantidad = $db->table('partidas')
+            ->select('cantidad_jugadores')
+            ->where('idPartida', $idPartida)
+            ->get()
+            ->getRow('cantidad_jugadores');
+
+        $intentos = 0;
+        do {
+            $turnoActual = $turnoActual % $cantidad + 1;
+
+            $jugador = $db->query("
+                SELECT * FROM partidas_usuarios 
+                WHERE idPartida = ? AND ordenTurnos = ? AND retirado = 0
+                LIMIT 1
+            ", [$idPartida, $turnoActual])->getRow();
+
+            $intentos++;
+        } while (!$jugador && $intentos <= $cantidad);
+
+        return $jugador ? $turnoActual : null;
+    }
+
+
+    // Ayuda a la función jugarAJAX() para verificar si se formó ANA
+    private function verificarANA($idPartida, $fila, $columna)
     {
         $db = \Config\Database::connect();
         $tablero = [];
@@ -361,7 +497,7 @@ class MainController extends BaseController
             $tablero[$celda->fila][$celda->columna] = $celda->letra;
         }
 
-        // $direcciones contiene las direcciones en las que se puede formar ANA
+        // $direcciones contiene las direcciones en las que se puede formar ANA (podría ir en Constants)
         $direcciones = [
             [0, 1],   // derecha
             [1, 0],   // abajo
@@ -400,10 +536,11 @@ class MainController extends BaseController
                 $totalANA++;
             }
         }
-
+        
         return $totalANA;
     }
-
+    
+    // Ayuda a la función retirarseAJAX() para verificar si terminó la partida
     private function verificarFinDeJuego($idPartida)
     {
         $db = \Config\Database::connect();
@@ -455,165 +592,31 @@ class MainController extends BaseController
         return true;
     }
 
-    public function retirarseAJAX()
+    // Ayuda a la función detectarANA() para encontrar todas las celdas que forman ANA -> el objetivo es pintar esas celdas en el tablero
+    private function detectarANA(array $tablero, int $filas, int $cols): array
     {
-        $datos = $this->request->getJSON();
-        $idPartida = $datos->idPartida ?? null;
-        $idUsuario = session()->get('id');
+        $res = [];
+        $dirs = [[0,1],[1,0],[1,1],[-1,1]]; //Mismas direcciones que en verificarANA() -> Podría ir en Constants
 
-        // 1. marcar retirado
-        $db = \Config\Database::connect();
-        $db->query("UPDATE partidas_usuarios 
-                    SET retirado = 1 
-                    WHERE idPartida = ? AND idUsuario = ?", 
-                    [$idPartida, $idUsuario]);
+        for ($f=0;$f<$filas;$f++){
+            for ($c=0;$c<$cols;$c++){
+                foreach ($dirs as [$df,$dc]){
+                    $f1 = $f+$df;   $f2 = $f+2*$df;
+                    $c1 = $c+$dc;   $c2 = $c+2*$dc;
 
-         /* 1.5  ¿era su turno?  ->  pasar turno al siguiente activo */
-    $partida = $db->table('partidas')
-                    ->where('idPartida', $idPartida)
-                    ->get()->getRow();
-
-    $yo = $db->table('partidas_usuarios')
-                ->where([
-                    'idPartida'   => $idPartida,
-                    'idUsuario'   => $idUsuario
-                ])->get()->getRow();
-
-    if ($partida && $yo && $partida->turnoActual == $yo->ordenTurnos) {
-        $turnoActual = $partida->turnoActual;
-        $intentos    = 0;
-
-        do {
-            $turnoActual = $turnoActual % $partida->cantidad_jugadores + 1;
-
-            $siguiente = $db->query(
-                "SELECT 1
-                    FROM partidas_usuarios
-                    WHERE idPartida = ? AND ordenTurnos = ? AND retirado = 0
-                    LIMIT 1",
-                [$idPartida, $turnoActual]
-            )->getRow();
-
-            $intentos++;
-        } while (!$siguiente && $intentos <= $partida->cantidad_jugadores);
-
-        if ($siguiente) {
-            $db->table('partidas')
-                ->where('idPartida', $idPartida)
-                ->update(['turnoActual' => $turnoActual]);
-        }
-    }
-
-
-        // 2. ¿cuántos activos quedan?
-        $activos = $db->query("
-            SELECT COUNT(*) AS c
-            FROM partidas_usuarios
-            WHERE idPartida = ? AND retirado = 0
-        ", [$idPartida])->getRow('c');
-
-        if ($activos <= 1) {                 // queda 1 o ninguno
-            // Ganador si queda 1
-            $ganador = null;
-            if ($activos == 1) {
-                $ganador = $db->query("
-                    SELECT idUsuario FROM partidas_usuarios
-                    WHERE idPartida = ? AND retirado = 0 LIMIT 1
-                ", [$idPartida])->getRow('idUsuario');
-            }
-            // finalizamos
-            $db->query("UPDATE partidas 
-                        SET estado = 'finalizada', idGanador = ?
-                        WHERE idPartida = ?", [$ganador, $idPartida]);
-
-            return $this->response->setJSON([
-                'success'   => true,
-                'finalizada'=> true,
-                'redirect'  => base_url("partida/resultados/$idPartida")
-            ]);
-        }
-
-        // Solo sale este jugador
-        return $this->response->setJSON([
-            'success' => true,
-            'finalizada' => false,
-            'redirect' => base_url('/partida')
-        ]);
-    }
-
-    public function votarFinAJAX()
-    {
-        $datos = $this->request->getJSON();
-        $idPartida = $datos->idPartida ?? null;
-        $acepto    = $datos->acepto ?? false;
-        $idUsuario = session()->get('id');
-
-        $db = \Config\Database::connect();
-        $db->query("
-            UPDATE partidas_usuarios 
-            SET votoFin = ? 
-            WHERE idPartida = ? AND idUsuario = ?",
-            [$acepto ? 1 : -1, $idPartida, $idUsuario]);
-
-        if (!$acepto) {
-            // alguien canceló → resetear votos y deshabilitar para todos
-            $db->query("UPDATE partidas_usuarios 
-                        SET votoFin = -1 
-                        WHERE idPartida = ?", [$idPartida]);
-
-            return $this->response->setJSON(['success'=>true,'cancelado'=>true]);
-        }
-
-        // ¿Todos los activos ya votaron 1?
-        $todos = $db->query("
-            SELECT COUNT(*) AS total,
-            SUM(votoFin=1) AS a_favor
-            FROM partidas_usuarios
-            WHERE idPartida = ? AND retirado = 0
-        ", [$idPartida])->getRowArray();
-
-        if ($todos['total'] == $todos['a_favor']) {
-            // finalizar sin ganador
-            $db->query("UPDATE partidas 
-                        SET estado='finalizada', idGanador = NULL
-                        WHERE idPartida = ?", [$idPartida]);
-
-            return $this->response->setJSON([
-                'success'=>true,
-                'finalizada'=>true,
-                'redirect'=>base_url("partida/resultados/$idPartida")
-            ]);
-        }
-
-        return $this->response->setJSON(['success'=>true,'enCurso'=>true]);
-    }
-
-private function detectarANA(array $tablero, int $filas, int $cols): array
-{
-    $res = [];
-    $dirs = [[0,1],[1,0],[1,1],[-1,1]];   // → ↓ ↘ ↗
-
-    for ($f=0;$f<$filas;$f++){
-        for ($c=0;$c<$cols;$c++){
-            foreach ($dirs as [$df,$dc]){
-                $f1 = $f+$df;   $f2 = $f+2*$df;
-                $c1 = $c+$dc;   $c2 = $c+2*$dc;
-
-                if (isset($tablero[$f][$c], $tablero[$f1][$c1], $tablero[$f2][$c2]) &&
-                    strtoupper($tablero[$f][$c])   === 'A' &&
-                    strtoupper($tablero[$f1][$c1]) === 'N' &&
-                    strtoupper($tablero[$f2][$c2]) === 'A')
-                {
-                    $res[] = ['fila'=>$f,'columna'=>$c];
-                    $res[] = ['fila'=>$f1,'columna'=>$c1];
-                    $res[] = ['fila'=>$f2,'columna'=>$c2];
+                    if (isset($tablero[$f][$c], $tablero[$f1][$c1], $tablero[$f2][$c2]) &&
+                        strtoupper($tablero[$f][$c])   === 'A' &&
+                        strtoupper($tablero[$f1][$c1]) === 'N' &&
+                        strtoupper($tablero[$f2][$c2]) === 'A')
+                    {
+                        $res[] = ['fila'=>$f,'columna'=>$c];
+                        $res[] = ['fila'=>$f1,'columna'=>$c1];
+                        $res[] = ['fila'=>$f2,'columna'=>$c2];
+                    }
                 }
             }
         }
+        return $res; // Devuelve un array con las celdas que forman ANA
     }
-    return $res;
-}
-
-
 }
 ?>

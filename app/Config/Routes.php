@@ -6,8 +6,8 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
- //RUTA PARA EL CONTROLADOR PRINCIPAL
-$routes->get('/', 'MainController::index');
+ //RUTA COMÚN
+$routes->get('/', 'MainController::index'); // Como es común esta ruta, se redirigira a la página de inicio de sesión
 
 //RUTAS PARA EL INICIO DE SESIÓN Y REGISTRO
 $routes->get('login', 'AuthController::login');

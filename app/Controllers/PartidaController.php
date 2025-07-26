@@ -5,6 +5,7 @@ use App\Models\Partida;
 
 class PartidaController extends BaseController
 {
+    // Se devuelve la vista de menú principal
     public function eleccionPartida()
     {
         if (!session()->get('id')) {
@@ -13,10 +14,10 @@ class PartidaController extends BaseController
         $nombre = session()->get('nombre');
         return view('partida', [
             'nombre' => $nombre,
-            'sonido' => false // No se reproduce sonido en esta vista
         ]);
     }
 
+    // Se devuelve la vista para crear una nueva partida
     public function vistaCrearPartida()
     {
         if (!session()->get('logueado')) {
@@ -28,6 +29,7 @@ class PartidaController extends BaseController
         ]);
     }
 
+    // Se procesa la creación de una nueva partida
     public function crearPartida()
     {
         helper('session'); // Cargamos el helper de sesión
@@ -70,6 +72,7 @@ class PartidaController extends BaseController
     return redirect()->to('/partida/espera/' . $idPartida);
     }
 
+    // Se devuelve la vista de espera para una partida
     public function espera($idPartida)
     {
         helper('session');
@@ -92,6 +95,7 @@ class PartidaController extends BaseController
         ]);
     }
 
+    // Se devuelve la vista para unirse a una partida disponible
     public function listarPartidas()
     {
         if (!session()->get('logueado')) {
@@ -120,6 +124,7 @@ class PartidaController extends BaseController
         return view('listarPartidas', ['partidas' => $partidas, 'nombre' => $nombre]);
     }
 
+    // Se procesa la unión a una partida existente
     public function estadoPartida($idPartida)
     {
         $partidaModel = new \App\Models\PartidaModel();
@@ -137,6 +142,7 @@ class PartidaController extends BaseController
         ]);
     }
 
+    // Se verifica si el usuario ya está en la partida y se une si hay lugar
     public function verificarEspera($idPartida)
     {
         helper('session');
@@ -181,6 +187,7 @@ class PartidaController extends BaseController
         return redirect()->to('/partida/espera/' . $idPartida);
     }
 
+    // Se borra al usuario de la partida en espera (se arrepiente de unirse)
     public function salirDeEspera($idPartida)
     {
         helper('session');
@@ -201,6 +208,7 @@ class PartidaController extends BaseController
         return redirect()->to('/partida/unirse');
     }
 
+    // Se asignan turnos a los jugadores de la partida
     public function asignarTurnos($idPartida)
     {
         helper('session');
@@ -229,7 +237,7 @@ class PartidaController extends BaseController
             ->findAll();
             
             // Hacemos el shuffle solo si NADIE tiene turno
-            shuffle($jugadores);
+            shuffle($jugadores); // Mezclamos los jugadores para asignar turnos aleatorios
             
             $db = \Config\Database::connect();
             
@@ -273,13 +281,110 @@ class PartidaController extends BaseController
         ]);
     }
 
+    
+    // Se devuelve la vista para mostrar los resultados de una partida luego de ser jugada
+    public function mostrarResultados($idPartida)
+    {
+        if (!session()->get('logueado')) {
+            return redirect()->to('/login')->with('error', 'Debes iniciar sesión para ver los resultados de la partida.');
+        }
+        // Validamos que el ID de la partida sea válido
+        $partidaModel = new \App\Models\PartidaModel();
+        $partidaUsuarioModel = new \App\Models\PartidaUsuarioModel();
+        $usuarioModel = new \App\Models\UsuarioModel();
+        
+        $partida = $partidaModel->find($idPartida);
+        
+        if (!$partida) {
+            return redirect()->to('/')->with('error', 'Partida no encontrada');
+        }
+        
+        // Si no está finalizada, redirigir
+        if ($partida['estado'] !== 'finalizada') {
+            return redirect()->to('/')->with('error', 'La partida aún está en curso');
+        }
+        
+        // Obtener los jugadores con sus puntajes
+        $jugadores = $partidaUsuarioModel->where('idPartida', $idPartida)->findAll();
+        
+        // Preparar array con nombre y puntos
+        $resultados = [];
+        foreach ($jugadores as $jugador) {
+            $usuario = $usuarioModel->find($jugador['idUsuario']);
+            $resultados[] = [
+                'nombre' => $usuario['nombreUsuario'],
+                'puntos' => $jugador['puntos'],
+                'esGanador' => ($jugador['idUsuario'] == $partida['idGanador']) // Verifica si es el ganador
+            ];
+        }
+        
+        // Ordenar por puntaje descendente
+        usort($resultados, fn($a, $b) => $b['puntos'] <=> $a['puntos']);
+        
+        return view('resultados', [
+            'resultados' => $resultados,
+            'idPartida' => $idPartida
+        ]);
+    }
+    
+    // Se muestra el ranking de jugadores
+    public function ranking()
+    {
+        if (!session()->get('logueado')) {
+            return redirect()->to('/login')->with('error', 'Debes iniciar sesión para ver el ranking.');
+        }
+
+        $nombre = session()->get('nombre');
+        $db = \Config\Database::connect();
+
+        // Obtener los tamaños únicos de tableros usados en partidas
+        $tableros = $db->query("SELECT DISTINCT filas, columnas FROM tableros ORDER BY filas, columnas")->getResultArray();
+        $rankingPorTablero = [];
+        
+        foreach ($tableros as $t) {
+            $filas = $t['filas'];
+            $columnas = $t['columnas'];
+            
+            // Subconsulta para contar ganadas y jugadas
+            $query = $db->query("
+            SELECT 
+            u.nombreUsuario,
+            u.id AS idUsuario,
+            COUNT(p.idPartida) AS jugadas,
+            SUM(CASE WHEN p.idGanador = u.id THEN 1 ELSE 0 END) AS ganadas,
+            MAX(p.fechaPartida) AS ultima_partida,
+                    SUM(pu.puntos) AS total_puntos
+                FROM partidas p
+                JOIN partidas_usuarios pu ON pu.idPartida = p.idPartida
+                JOIN usuarios u ON u.id = pu.idUsuario
+                JOIN tableros t ON p.idTablero = t.idTablero
+                WHERE t.filas = ? AND t.columnas = ? AND p.estado = 'finalizada'
+                GROUP BY u.id
+                ORDER BY ganadas DESC, total_puntos DESC,jugadas DESC, idUsuario ASC
+                LIMIT 5
+            ", [$filas, $columnas]);
+
+            $rankingPorTablero["{$filas}x{$columnas}"] = $query->getResultArray();
+        }
+
+        return view('ranking', [
+            'rankingPorTablero' => $rankingPorTablero,
+            'nombre' => $nombre
+        ]);
+    }
+
+    
+    /*--------------------------
+    FUNCIONES PRIVADAS DE AYUDA
+    ----------------------------*/
+    // Ayuda a la función asignarTurnos() para obtener un resumen de partidas
     private function obtenerResumenEntreJugadores(array $idUsuarios)
     {
         $db = \Config\Database::connect();
         sort($idUsuarios); // normalizamos el array
         $jugadoresKey = implode(',', $idUsuarios);
         $inIds = implode(',', $idUsuarios);
-
+    
         /* ----------  1. ¿Hay historial conjunto?  ---------- */
         $partidas = $db->query("
             SELECT p.idPartida, p.fechaPartida, p.idGanador, u.nombreUsuario AS nombreGanador
@@ -290,7 +395,7 @@ class PartidaController extends BaseController
             GROUP BY p.idPartida
             ORDER BY p.fechaPartida DESC
         ")->getResultArray();
-
+    
         foreach ($partidas as $partida) {
             $usuariosEnPartida = array_column(
                 $db->query("SELECT idUsuario FROM partidas_usuarios WHERE idPartida = ?", [$partida['idPartida']])
@@ -311,7 +416,7 @@ class PartidaController extends BaseController
                 ];
             }
         }
-
+    
         /* ----------  2. No hay historial: construir ranking ---------- */
         //  inicializamos victorias en 0
         $victorias = [];
@@ -319,7 +424,7 @@ class PartidaController extends BaseController
             $nombre = $db->table('usuarios')->select('nombreUsuario')->where('id', $uid)->get()->getRow('nombreUsuario');
             $victorias[$nombre] = 0;
         }
-
+    
         //  sumamos las reales si existen
         $ganadas = $db->query("
             SELECT u.nombreUsuario, COUNT(*) AS ganadas
@@ -328,102 +433,14 @@ class PartidaController extends BaseController
             WHERE p.idGanador IN ($inIds)
             GROUP BY p.idGanador
         ")->getResultArray();
-
+    
         foreach ($ganadas as $fila) {
             $victorias[$fila['nombreUsuario']] = (int)$fila['ganadas'];
         }
-
+    
         return [
             'tipo'      => 'ranking',
-            'victorias' => $victorias // ← siempre contiene a todos los jugadores
+            'victorias' => $victorias
         ];
-    }
-
-    public function mostrarResultados($idPartida)
-    {
-        if (!session()->get('logueado')) {
-            return redirect()->to('/login')->with('error', 'Debes iniciar sesión para ver los resultados de la partida.');
-        }
-        // Validamos que el ID de la partida sea válido
-        $partidaModel = new \App\Models\PartidaModel();
-        $partidaUsuarioModel = new \App\Models\PartidaUsuarioModel();
-        $usuarioModel = new \App\Models\UsuarioModel();
-
-        $partida = $partidaModel->find($idPartida);
-
-        if (!$partida) {
-            return redirect()->to('/')->with('error', 'Partida no encontrada');
-        }
-
-        // Si no está finalizada, redirigir
-        if ($partida['estado'] !== 'finalizada') {
-            return redirect()->to('/')->with('error', 'La partida aún está en curso');
-        }
-
-        // Obtener los jugadores con sus puntajes
-        $jugadores = $partidaUsuarioModel->where('idPartida', $idPartida)->findAll();
-
-        // Preparar array con nombre y puntos
-        $resultados = [];
-        foreach ($jugadores as $jugador) {
-            $usuario = $usuarioModel->find($jugador['idUsuario']);
-            $resultados[] = [
-                'nombre' => $usuario['nombreUsuario'],
-                'puntos' => $jugador['puntos'],
-                'esGanador' => ($jugador['idUsuario'] == $partida['idGanador']) // Verifica si es el ganador
-            ];
-        }
-
-        // Ordenar por puntaje descendente
-        usort($resultados, fn($a, $b) => $b['puntos'] <=> $a['puntos']);
-
-        return view('resultados', [
-            'resultados' => $resultados,
-            'idPartida' => $idPartida
-        ]);
-    }
-
-    public function ranking()
-    {
-        if (!session()->get('logueado')) {
-            return redirect()->to('/login')->with('error', 'Debes iniciar sesión para ver el ranking.');
-        }
-
-        $nombre = session()->get('nombre');
-        $db = \Config\Database::connect();
-
-        // Obtener los tamaños únicos de tableros usados en partidas
-        $tableros = $db->query("SELECT DISTINCT filas, columnas FROM tableros ORDER BY filas, columnas")->getResultArray();
-        $rankingPorTablero = [];
-
-        foreach ($tableros as $t) {
-            $filas = $t['filas'];
-            $columnas = $t['columnas'];
-
-            // Subconsulta para contar ganadas y jugadas
-            $query = $db->query("
-                SELECT 
-                    u.nombreUsuario,
-                    u.id AS idUsuario,
-                    COUNT(p.idPartida) AS jugadas,
-                    SUM(CASE WHEN p.idGanador = u.id THEN 1 ELSE 0 END) AS ganadas,
-                    MAX(p.fechaPartida) AS ultima_partida
-                FROM partidas p
-                JOIN partidas_usuarios pu ON pu.idPartida = p.idPartida
-                JOIN usuarios u ON u.id = pu.idUsuario
-                JOIN tableros t ON p.idTablero = t.idTablero
-                WHERE t.filas = ? AND t.columnas = ? AND p.estado = 'finalizada'
-                GROUP BY u.id
-                ORDER BY ganadas DESC, jugadas DESC, idUsuario ASC
-                LIMIT 5
-            ", [$filas, $columnas]);
-
-            $rankingPorTablero["{$filas}x{$columnas}"] = $query->getResultArray();
-        }
-
-        return view('ranking', [
-            'rankingPorTablero' => $rankingPorTablero,
-            'nombre' => $nombre
-        ]);
     }
 }
